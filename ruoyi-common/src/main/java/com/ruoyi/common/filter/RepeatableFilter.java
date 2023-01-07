@@ -18,6 +18,7 @@ import com.ruoyi.common.utils.StringUtils;
  * @author ruoyi
  */
 public class RepeatableFilter implements Filter {
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 

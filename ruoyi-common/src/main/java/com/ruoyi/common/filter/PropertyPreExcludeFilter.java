@@ -8,12 +8,13 @@ import com.alibaba.fastjson2.filter.SimplePropertyPreFilter;
  * @author ruoyi
  */
 public class PropertyPreExcludeFilter extends SimplePropertyPreFilter {
+
     public PropertyPreExcludeFilter() {
     }
 
     public PropertyPreExcludeFilter addExcludes(String... filters) {
-        for (int i = 0; i < filters.length; i++) {
-            this.getExcludes().add(filters[i]);
+        for (String filter : filters) {
+            this.getExcludes().add(filter);
         }
         return this;
     }

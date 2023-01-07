@@ -129,3 +129,35 @@ xss:
   excludes: /system/notice
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
+
+camunda:
+  bpm:
+    admin-user:
+      id: camunda
+      password: admin
+      first-name: admin
+
+    database:
+      type: mysql
+
+    filter:
+      create: All tasks
+
+#    #配置路径
+#    webapp:
+#      application-path: /mycamunda
+#      #禁用
+#      index-redirect-enabled: false
+
+#    #Camunda默认不开启序列化,开启序列化
+#    generic-properties:
+#      properties:
+#        javaSerializationFormatEnabled: true
+#
+#    #开启camunda的权限管理
+#    authorization:
+#      enabled: false
+#
+#    #关闭自动部署
+#    auto-deployment-enabled: false

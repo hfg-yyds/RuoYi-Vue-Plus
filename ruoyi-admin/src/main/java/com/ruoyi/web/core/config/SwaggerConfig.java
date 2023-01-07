@@ -68,8 +68,8 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build()
                 /* 设置安全模式，swagger可以设置访问token */
-                .securitySchemes(securitySchemes())
-                .securityContexts(securityContexts())
+                /*.securitySchemes(securitySchemes())
+                .securityContexts(securityContexts())*/
                 .pathMapping(pathMapping);
     }
 

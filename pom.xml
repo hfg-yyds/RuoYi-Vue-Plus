@@ -188,6 +188,7 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
+        <module>Ruoyi-workflow</module>
     </modules>
     <packaging>pom</packaging>
 

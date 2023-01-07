@@ -26,17 +26,19 @@ import com.ruoyi.framework.web.service.TokenService;
  */
 @Configuration
 public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
+
     @Autowired
     private TokenService tokenService;
 
     /**
      * 退出处理
-     *
-     * @return
+     * @param request request
+     * @param response response
+     * @param authentication authentication
      */
     @Override
-    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-            throws IOException, ServletException {
+    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
+                                Authentication authentication) {
         LoginUser loginUser = tokenService.getLoginUser(request);
         if (StringUtils.isNotNull(loginUser)) {
             String userName = loginUser.getUsername();

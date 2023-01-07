@@ -1,5 +1,6 @@
 package com.ruoyi;
 
+import org.camunda.bpm.spring.boot.starter.annotation.EnableProcessApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  *
  * @author ruoyi
  */
+@EnableProcessApplication
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class RuoYiApplication {
     public static void main(String[] args) {
