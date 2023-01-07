@@ -64,12 +64,12 @@ public class TokenService {
                 // 解析对应的权限以及用户信息
                 String uuid = (String) claims.get(Constants.LOGIN_USER_KEY);
                 String userKey = getTokenKey(uuid);
-                LoginUser user = redisCache.getCacheObject(userKey);
-                return user;
+                return redisCache.getCacheObject(userKey);
             } catch (Exception e) {
+                throw new RuntimeException("解析Token失败!");
             }
         }
-        return null;
+        throw new RuntimeException("请求未带Token!");
     }
 
     /**
@@ -189,7 +189,7 @@ public class TokenService {
     /**
      * 获取请求token
      *
-     * @param request
+     * @param request request
      * @return token
      */
     private String getToken(HttpServletRequest request) {

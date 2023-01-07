@@ -3,6 +3,7 @@ package com.ruoyi.web.controller.system;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -29,12 +30,19 @@ import com.ruoyi.system.service.ISysDictTypeService;
  *
  * @author ruoyi
  */
+@Api(value = "数据字典信息")
 @RestController
 @RequestMapping("/system/dict/type")
 public class SysDictTypeController extends BaseController {
+
     @Autowired
     private ISysDictTypeService dictTypeService;
 
+    /**
+     * 查询字典
+     * @param dictType dictType
+     * @return TableDataInfo
+     */
     @PreAuthorize("@ss.hasPermi('system:dict:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysDictType dictType) {

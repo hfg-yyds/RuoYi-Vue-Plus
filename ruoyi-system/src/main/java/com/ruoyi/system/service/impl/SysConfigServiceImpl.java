@@ -3,6 +3,7 @@ package com.ruoyi.system.service.impl;
 import java.util.Collection;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ import com.ruoyi.system.service.ISysConfigService;
  */
 @Service
 public class SysConfigServiceImpl implements ISysConfigService {
-    @Autowired
+    @Resource
     private SysConfigMapper configMapper;
 
     @Autowired
@@ -189,9 +190,9 @@ public class SysConfigServiceImpl implements ISysConfigService {
      */
     @Override
     public String checkConfigKeyUnique(SysConfig config) {
-        Long configId = StringUtils.isNull(config.getConfigId()) ? -1L : config.getConfigId();
+        long configId = StringUtils.isNull(config.getConfigId()) ? -1L : config.getConfigId();
         SysConfig info = configMapper.checkConfigKeyUnique(config.getConfigKey());
-        if (StringUtils.isNotNull(info) && info.getConfigId().longValue() != configId.longValue()) {
+        if (StringUtils.isNotNull(info) && info.getConfigId() != configId) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;

@@ -13,7 +13,7 @@ import com.ruoyi.common.utils.ip.IpUtils;
 import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.system.domain.SysLogininfor;
 import com.ruoyi.system.domain.SysOperLog;
-import com.ruoyi.system.service.ISysLogininforService;
+import com.ruoyi.system.service.ISysLoginInfoService;
 import com.ruoyi.system.service.ISysOperLogService;
 import eu.bitwalker.useragentutils.UserAgent;
 
@@ -23,6 +23,7 @@ import eu.bitwalker.useragentutils.UserAgent;
  * @author ruoyi
  */
 public class AsyncFactory {
+
     private static final Logger sys_user_logger = LoggerFactory.getLogger("sys-user");
 
     /**
@@ -69,7 +70,7 @@ public class AsyncFactory {
                     logininfor.setStatus(Constants.FAIL);
                 }
                 // 插入数据
-                SpringUtils.getBean(ISysLogininforService.class).insertLogininfor(logininfor);
+                SpringUtils.getBean(ISysLoginInfoService.class).insertLogininfor(logininfor);
             }
         };
     }

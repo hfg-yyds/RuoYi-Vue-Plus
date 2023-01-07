@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.RegExUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
@@ -23,8 +25,11 @@ import com.ruoyi.common.annotation.Anonymous;
  *
  * @author ruoyi
  */
+@Getter
+@Setter
 @Configuration
 public class PermitAllUrlProperties implements InitializingBean, ApplicationContextAware {
+
     private static final Pattern PATTERN = Pattern.compile("\\{(.*?)\\}");
 
     private ApplicationContext applicationContext;
@@ -43,13 +48,19 @@ public class PermitAllUrlProperties implements InitializingBean, ApplicationCont
 
             // 获取方法上边的注解 替代path variable 为 *
             Anonymous method = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), Anonymous.class);
-            Optional.ofNullable(method).ifPresent(anonymous -> info.getPatternsCondition().getPatterns()
-                    .forEach(url -> urls.add(RegExUtils.replaceAll(url, PATTERN, ASTERISK))));
+            Optional.ofNullable(method).ifPresent(anonymous -> {
+                assert info.getPatternsCondition() != null;
+                info.getPatternsCondition().getPatterns()
+                        .forEach(url -> urls.add(RegExUtils.replaceAll(url, PATTERN, ASTERISK)));
+            });
 
             // 获取类上边的注解, 替代path variable 为 *
             Anonymous controller = AnnotationUtils.findAnnotation(handlerMethod.getBeanType(), Anonymous.class);
-            Optional.ofNullable(controller).ifPresent(anonymous -> info.getPatternsCondition().getPatterns()
-                    .forEach(url -> urls.add(RegExUtils.replaceAll(url, PATTERN, ASTERISK))));
+            Optional.ofNullable(controller).ifPresent(anonymous -> {
+                assert info.getPatternsCondition() != null;
+                info.getPatternsCondition().getPatterns()
+                        .forEach(url -> urls.add(RegExUtils.replaceAll(url, PATTERN, ASTERISK)));
+            });
         });
     }
 
@@ -58,11 +69,4 @@ public class PermitAllUrlProperties implements InitializingBean, ApplicationCont
         this.applicationContext = context;
     }
 
-    public List<String> getUrls() {
-        return urls;
-    }
-
-    public void setUrls(List<String> urls) {
-        this.urls = urls;
-    }
 }

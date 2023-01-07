@@ -23,6 +23,7 @@ import com.ruoyi.common.utils.StringUtils;
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**

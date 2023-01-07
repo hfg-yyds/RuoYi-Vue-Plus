@@ -31,7 +31,7 @@ public interface ISysConfigService {
      *
      * @return true开启，false关闭
      */
-    public boolean selectCaptchaEnabled();
+    boolean selectCaptchaEnabled();
 
     /**
      * 查询参数配置列表
@@ -39,7 +39,7 @@ public interface ISysConfigService {
      * @param config 参数配置信息
      * @return 参数配置集合
      */
-    public List<SysConfig> selectConfigList(SysConfig config);
+    List<SysConfig> selectConfigList(SysConfig config);
 
     /**
      * 新增参数配置
@@ -77,7 +77,7 @@ public interface ISysConfigService {
     /**
      * 重置参数缓存数据
      */
-    public void resetConfigCache();
+    void resetConfigCache();
 
     /**
      * 校验参数键名是否唯一

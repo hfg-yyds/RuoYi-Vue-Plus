@@ -23,6 +23,7 @@ import com.ruoyi.framework.interceptor.RepeatSubmitInterceptor;
  */
 @Configuration
 public class ResourcesConfig implements WebMvcConfigurer {
+
     @Autowired
     private RepeatSubmitInterceptor repeatSubmitInterceptor;
 
@@ -68,4 +69,5 @@ public class ResourcesConfig implements WebMvcConfigurer {
         // 返回新的CorsFilter
         return new CorsFilter(source);
     }
+
 }

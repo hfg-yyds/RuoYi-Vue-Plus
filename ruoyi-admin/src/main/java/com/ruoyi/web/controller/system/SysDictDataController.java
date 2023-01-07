@@ -34,6 +34,7 @@ import com.ruoyi.system.service.ISysDictTypeService;
 @RestController
 @RequestMapping("/system/dict/data")
 public class SysDictDataController extends BaseController {
+
     @Autowired
     private ISysDictDataService dictDataService;
 

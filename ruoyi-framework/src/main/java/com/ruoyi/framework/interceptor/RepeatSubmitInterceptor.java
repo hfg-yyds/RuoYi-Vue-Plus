@@ -19,6 +19,7 @@ import com.ruoyi.common.utils.ServletUtils;
  */
 @Component
 public abstract class RepeatSubmitInterceptor implements HandlerInterceptor {
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (handler instanceof HandlerMethod) {
@@ -46,4 +47,5 @@ public abstract class RepeatSubmitInterceptor implements HandlerInterceptor {
      * @throws Exception
      */
     public abstract boolean isRepeatSubmit(HttpServletRequest request, RepeatSubmit annotation);
+
 }

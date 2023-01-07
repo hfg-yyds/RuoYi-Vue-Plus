@@ -11,6 +11,7 @@ import com.ruoyi.common.constant.Constants;
  * @author ruoyi
  */
 public class VelocityInitializer {
+
     /**
      * 初始化vm方法
      */
@@ -27,4 +28,5 @@ public class VelocityInitializer {
             throw new RuntimeException(e);
         }
     }
+
 }

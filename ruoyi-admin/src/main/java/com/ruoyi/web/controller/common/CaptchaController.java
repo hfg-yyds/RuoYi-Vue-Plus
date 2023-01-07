@@ -5,8 +5,9 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletResponse;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,8 +27,17 @@ import com.ruoyi.system.service.ISysConfigService;
  *
  * @author ruoyi
  */
+@Api(value = "验证码操作处理")
 @RestController
 public class CaptchaController {
+    /**
+     * 验证码类型 math 数组计算
+     */
+    public static final String MATH = "math";
+    /**
+     * 验证码类型 char 字符验证
+     */
+    public static final String CHAR = "char";
 
     @Resource(name = "captchaProducer")
     private Producer captchaProducer;
@@ -43,9 +53,11 @@ public class CaptchaController {
 
     /**
      * 生成验证码
+     * @return AjaxResult
      */
     @GetMapping("/captchaImage")
-    public AjaxResult getCode(HttpServletResponse response) throws IOException {
+    @ApiOperation(value = "生成验证码")
+    public AjaxResult getCode() {
         AjaxResult ajax = AjaxResult.success();
         boolean captchaEnabled = configService.selectCaptchaEnabled();
         ajax.put("captchaEnabled", captchaEnabled);
@@ -58,16 +70,17 @@ public class CaptchaController {
         String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + uuid;
 
         String capStr = null, code = null;
+
         BufferedImage image = null;
 
         // 生成验证码
         String captchaType = RuoYiConfig.getCaptchaType();
-        if ("math".equals(captchaType)) {
+        if (MATH.equals(captchaType)) {
             String capText = captchaProducerMath.createText();
             capStr = capText.substring(0, capText.lastIndexOf("@"));
             code = capText.substring(capText.lastIndexOf("@") + 1);
             image = captchaProducerMath.createImage(capStr);
-        } else if ("char".equals(captchaType)) {
+        } else if (CHAR.equals(captchaType)) {
             capStr = code = captchaProducer.createText();
             image = captchaProducer.createImage(capStr);
         }
@@ -85,4 +98,5 @@ public class CaptchaController {
         ajax.put("img", Base64.encode(os.toByteArray()));
         return ajax;
     }
+
 }

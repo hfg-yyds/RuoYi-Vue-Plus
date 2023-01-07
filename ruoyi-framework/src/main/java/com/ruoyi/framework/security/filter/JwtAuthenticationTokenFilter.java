@@ -25,6 +25,9 @@ import com.ruoyi.framework.web.service.TokenService;
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
+    /**
+     * token服务
+     */
     @Autowired
     private TokenService tokenService;
 
@@ -40,4 +43,5 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         }
         chain.doFilter(request, response);
     }
+
 }

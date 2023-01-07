@@ -21,6 +21,7 @@ import com.ruoyi.system.service.ISysUserService;
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+
     private static final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
     @Autowired
@@ -54,4 +55,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails createLoginUser(SysUser user) {
         return new LoginUser(user.getUserId(), user.getDeptId(), user, permissionService.getMenuPermission(user));
     }
+
 }

@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
  * @author ruoyi
  */
 public class DynamicDataSourceContextHolder {
+
     public static final Logger log = LoggerFactory.getLogger(DynamicDataSourceContextHolder.class);
 
     /**
@@ -38,4 +39,5 @@ public class DynamicDataSourceContextHolder {
     public static void clearDataSourceType() {
         CONTEXT_HOLDER.remove();
     }
+
 }

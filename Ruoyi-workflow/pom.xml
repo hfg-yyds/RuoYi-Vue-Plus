@@ -12,9 +12,6 @@
     <artifactId>Ruoyi-workflow</artifactId>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <camunda.spring-boot.version>7.17.0</camunda.spring-boot.version>
         <!--Camunda工作流-->
         <camunda.spring-boot.version>7.17.0</camunda.spring-boot.version>
         <camunda.webapp.version>7.17.0</camunda.webapp.version>
@@ -27,22 +24,26 @@
         <dependency>
             <groupId>org.camunda.bpm.springboot</groupId>
             <artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
+            <version>${camunda.webapp.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.camunda.bpm.springboot</groupId>
             <artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
+            <version>${camunda.rest.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-engine-plugin-spin</artifactId>
+            <version>${camunda.spin.version}</version>
         </dependency>
 
         <!--ServiceConnector所需 ,通过Http请求调用服务-->
         <dependency>
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-engine-plugin-connect</artifactId>
+            <version>${camunda.connect.version}</version>
         </dependency>
 
         <dependency>

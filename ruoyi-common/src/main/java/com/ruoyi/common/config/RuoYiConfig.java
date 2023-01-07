@@ -15,12 +15,10 @@ public class RuoYiConfig {
      * 项目名称
      */
     private String name;
-
     /**
      * 版本
      */
     private String version;
-
     /**
      * 版权年份
      */
@@ -37,7 +35,7 @@ public class RuoYiConfig {
     private static String profile;
 
     /**
-     * 获取地址开关
+     * 获取IP地址开关
      */
     private static boolean addressEnabled;
 

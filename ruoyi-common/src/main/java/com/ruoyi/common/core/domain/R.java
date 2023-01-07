@@ -3,13 +3,17 @@ package com.ruoyi.common.core.domain;
 import java.io.Serializable;
 
 import com.ruoyi.common.constant.HttpStatus;
+import com.ruoyi.common.interfaces.RunnableAndGetResult;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 响应信息主体
  *
  * @author ruoyi
  */
+@Slf4j
 public class R<T> implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     /**
@@ -99,4 +103,29 @@ public class R<T> implements Serializable {
     public static <T> Boolean isSuccess(R<T> ret) {
         return R.SUCCESS == ret.getCode();
     }
+
+    public static R<?> run(Runnable runnable) {
+        try {
+            runnable.run();
+            return ok();
+        } catch (Throwable e) {
+            log.error("异常信息:" + e.getMessage());
+            return fail(e);
+        }
+    }
+
+    /**
+     * @param runnable 有返回值得
+     * @param <V>      v
+     * @return v
+     */
+    public static <V> R<V> run(RunnableAndGetResult<V> runnable) {
+        try {
+            return ok(runnable.run());
+        } catch (Throwable e) {
+            log.error("异常信息:" + e.getMessage());
+            return (R<V>) fail(e);
+        }
+    }
+
 }

@@ -8,7 +8,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisServerCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,10 +32,11 @@ import com.ruoyi.system.domain.SysCache;
 @RestController
 @RequestMapping("/monitor/cache")
 public class CacheController {
+
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
-    private final static List<SysCache> caches = new ArrayList<SysCache>();
+    private final static List<SysCache> caches = new ArrayList<>();
 
     {
         caches.add(new SysCache(CacheConstants.LOGIN_TOKEN_KEY, "用户信息"));
@@ -45,18 +48,25 @@ public class CacheController {
         caches.add(new SysCache(CacheConstants.PWD_ERR_CNT_KEY, "密码错误次数"));
     }
 
+    /**
+     * 缓存监控
+     * @return AjaxResult
+     * @throws Exception e
+     */
+    @ApiOperation(value = "缓存监控")
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @GetMapping()
     public AjaxResult getInfo() throws Exception {
-        Properties info = (Properties) redisTemplate.execute((RedisCallback<Object>) connection -> connection.info());
+        Properties info = (Properties) redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::info);
         Properties commandStats = (Properties) redisTemplate.execute((RedisCallback<Object>) connection -> connection.info("commandstats"));
-        Object dbSize = redisTemplate.execute((RedisCallback<Object>) connection -> connection.dbSize());
+        Object dbSize = redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::dbSize);
 
         Map<String, Object> result = new HashMap<>(3);
         result.put("info", info);
         result.put("dbSize", dbSize);
 
         List<Map<String, String>> pieList = new ArrayList<>();
+        assert commandStats != null;
         commandStats.stringPropertyNames().forEach(key -> {
             Map<String, String> data = new HashMap<>(2);
             String property = commandStats.getProperty(key);
@@ -68,12 +78,23 @@ public class CacheController {
         return AjaxResult.success(result);
     }
 
+    /**
+     * 得到缓存的名字
+     * @return 名字
+     */
+    @ApiOperation(value = "得到缓存的名字")
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @GetMapping("/getNames")
     public AjaxResult cache() {
         return AjaxResult.success(caches);
     }
 
+    /**
+     * 根据缓存名称查询缓存
+     * @param cacheName 缓存名称
+     * @return AjaxResult
+     */
+    @ApiOperation("根据缓存名称查询缓存")
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @GetMapping("/getKeys/{cacheName}")
     public AjaxResult getCacheKeys(@PathVariable String cacheName) {
@@ -81,6 +102,12 @@ public class CacheController {
         return AjaxResult.success(cacheKeys);
     }
 
+    /**
+     * 查询缓存的值
+     * @param cacheName 缓存名称
+     * @param cacheKey 缓存Key
+     * @return AjaxResult
+     */
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @GetMapping("/getValue/{cacheName}/{cacheKey}")
     public AjaxResult getCacheValue(@PathVariable String cacheName, @PathVariable String cacheKey) {
@@ -89,6 +116,11 @@ public class CacheController {
         return AjaxResult.success(sysCache);
     }
 
+    /**
+     * 缓存名称
+     * @param cacheName 缓存名称
+     * @return
+     */
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @DeleteMapping("/clearCacheName/{cacheName}")
     public AjaxResult clearCacheName(@PathVariable String cacheName) {

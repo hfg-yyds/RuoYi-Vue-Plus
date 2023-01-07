@@ -17,6 +17,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  **/
 @Configuration
 public class ThreadPoolConfig {
+
     // 核心线程池大小
     private int corePoolSize = 50;
 
@@ -56,4 +57,5 @@ public class ThreadPoolConfig {
             }
         };
     }
+
 }

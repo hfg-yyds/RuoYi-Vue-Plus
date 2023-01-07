@@ -18,6 +18,7 @@ import com.ruoyi.system.service.ISysRoleService;
  */
 @Component
 public class SysPermissionService {
+
     @Autowired
     private ISysRoleService roleService;
 

@@ -1,7 +1,11 @@
 package com.ruoyi.workflow.service;
 
 import org.camunda.bpm.engine.rest.dto.history.HistoricTaskInstanceDto;
+import org.camunda.bpm.engine.rest.dto.repository.DeploymentDto;
+import org.camunda.bpm.engine.rest.dto.runtime.ProcessInstanceDto;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -13,6 +17,15 @@ import java.util.List;
  * @date: 2023-01-07
  */
 public interface WorkFlowService {
+    /**
+     * 流程部署
+     * @param multipartFile
+     * @param name
+     * @param source
+     * @return
+     * @throws IOException
+     */
+    DeploymentDto deployProcess(MultipartFile multipartFile, String name, String source) throws IOException;
 
     /**
      * 查询已办任务
@@ -22,4 +35,11 @@ public interface WorkFlowService {
      */
     List<HistoricTaskInstanceDto> getDoneTaskPage(String userId);
 
+    /**
+     * 查询正在运行的流程实例
+     * @param start 流程实例开始索引
+     * @param max 最大数量
+     * @return list
+     */
+    List<ProcessInstanceDto> queryProcessInstances(int start,int max);
 }

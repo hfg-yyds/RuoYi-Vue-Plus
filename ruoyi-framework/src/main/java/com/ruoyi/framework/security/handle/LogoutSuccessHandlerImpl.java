@@ -1,7 +1,5 @@
 package com.ruoyi.framework.security.handle;
 
-import java.io.IOException;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -49,4 +47,5 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
         }
         ServletUtils.renderString(response, JSON.toJSONString(AjaxResult.success("退出成功")));
     }
+
 }
