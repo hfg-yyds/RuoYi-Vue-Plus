@@ -18,13 +18,14 @@ import org.apache.commons.lang3.time.DateFormatUtils;
  * @author ruoyi
  */
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
+
     public static String YYYY = "yyyy";
 
     public static String YYYY_MM = "yyyy-MM";
 
     public static String YYYY_MM_DD = "yyyy-MM-dd";
 
-    public static String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
+    public static String YYYY_MM_DD_HH_MM_SS_SHORT = "yyyyMMddHHmmss";
 
     public static String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
 
@@ -56,7 +57,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     }
 
     public static final String dateTimeNow() {
-        return dateTimeNow(YYYYMMDDHHMMSS);
+        return dateTimeNow(YYYY_MM_DD_HH_MM_SS_SHORT);
     }
 
     public static final String dateTimeNow(final String format) {

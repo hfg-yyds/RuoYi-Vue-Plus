@@ -9,6 +9,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import com.ruoyi.common.utils.StringUtils;
 
@@ -17,11 +18,12 @@ import com.ruoyi.common.utils.StringUtils;
  *
  * @author ruoyi
  */
+@Slf4j
 public class RepeatableFilter implements Filter {
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
+    public void init(FilterConfig filterConfig) {
+        log.info("RepeatableFilter init !");
     }
 
     @Override
@@ -41,6 +43,7 @@ public class RepeatableFilter implements Filter {
 
     @Override
     public void destroy() {
-
+        log.info("RepeatableFilter destroy !");
     }
+
 }

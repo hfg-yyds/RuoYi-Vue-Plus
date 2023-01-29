@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.text.Convert;
 import com.ruoyi.generator.domain.GenTableColumn;
 import com.ruoyi.generator.mapper.GenTableColumnMapper;
 

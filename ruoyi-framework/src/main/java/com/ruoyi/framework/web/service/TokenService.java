@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.Constants;
-import com.ruoyi.common.core.domain.model.LoginUser;
-import com.ruoyi.common.core.redis.RedisCache;
+import com.ruoyi.common.web.domain.model.LoginUser;
+import com.ruoyi.common.redis.RedisCache;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.ip.AddressUtils;
@@ -69,7 +69,7 @@ public class TokenService {
                 throw new RuntimeException("解析Token失败!");
             }
         }
-        throw new RuntimeException("请求未带Token!");
+        return null;
     }
 
     /**

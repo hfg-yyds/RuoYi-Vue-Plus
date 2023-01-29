@@ -5,18 +5,17 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson2.JSON;
 import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.core.domain.model.LoginUser;
+import com.ruoyi.common.web.domain.model.LoginUser;
 import com.ruoyi.common.enums.BusinessStatus;
 import com.ruoyi.common.enums.HttpMethod;
 import com.ruoyi.common.filter.PropertyPreExcludeFilter;
@@ -33,10 +32,10 @@ import com.ruoyi.system.domain.SysOperLog;
  *
  * @author ruoyi
  */
+@Slf4j
 @Aspect
 @Component
 public class LogAspect {
-    private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
 
     /**
      * 排除敏感属性字段
@@ -93,7 +92,7 @@ public class LogAspect {
             // 处理设置注解上的参数
             getControllerMethodDescription(joinPoint, controllerLog, operLog, jsonResult);
             // 保存数据库
-            AsyncManager.me().execute(AsyncFactory.recordOper(operLog));
+            AsyncManager.me().execute(AsyncFactory.recordOperation(operLog));
         } catch (Exception exp) {
             // 记录本地异常日志
             log.error("异常信息:{}", exp.getMessage());
@@ -106,7 +105,7 @@ public class LogAspect {
      *
      * @param log     日志
      * @param operLog 操作日志
-     * @throws Exception
+     * @throws Exception e
      */
     public void getControllerMethodDescription(JoinPoint joinPoint, Log log, SysOperLog operLog, Object jsonResult) throws Exception {
         // 设置action动作
@@ -147,19 +146,19 @@ public class LogAspect {
      * 参数拼装
      */
     private String argsArrayToString(Object[] paramsArray) {
-        String params = "";
+        StringBuilder params = new StringBuilder();
         if (paramsArray != null && paramsArray.length > 0) {
             for (Object o : paramsArray) {
                 if (StringUtils.isNotNull(o) && !isFilterObject(o)) {
                     try {
                         String jsonObj = JSON.toJSONString(o, excludePropertyPreFilter());
-                        params += jsonObj.toString() + " ";
+                        params.append(jsonObj).append(" ");
                     } catch (Exception e) {
                     }
                 }
             }
         }
-        return params.trim();
+        return params.toString().trim();
     }
 
     /**
@@ -195,4 +194,5 @@ public class LogAspect {
         return o instanceof MultipartFile || o instanceof HttpServletRequest || o instanceof HttpServletResponse
                 || o instanceof BindingResult;
     }
+
 }

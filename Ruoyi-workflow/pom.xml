@@ -13,7 +13,6 @@
 
     <properties>
         <!--Camunda工作流-->
-        <camunda.spring-boot.version>7.17.0</camunda.spring-boot.version>
         <camunda.webapp.version>7.17.0</camunda.webapp.version>
         <camunda.rest.version>7.17.0</camunda.rest.version>
         <camunda.spin.version>7.17.0</camunda.spin.version>

@@ -123,4 +123,5 @@ public class SwaggerConfig {
                 .version("版本号:" + ruoyiConfig.getVersion())
                 .build();
     }
+
 }

@@ -10,9 +10,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.Constants;
-import com.ruoyi.common.core.domain.entity.SysUser;
-import com.ruoyi.common.core.domain.model.LoginUser;
-import com.ruoyi.common.core.redis.RedisCache;
+import com.ruoyi.common.web.domain.entity.SysUser;
+import com.ruoyi.common.web.domain.model.LoginUser;
+import com.ruoyi.common.redis.RedisCache;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.exception.user.CaptchaException;
 import com.ruoyi.common.exception.user.CaptchaExpireException;
@@ -35,6 +35,7 @@ import com.ruoyi.system.service.ISysUserService;
  */
 @Component
 public class SysLoginService {
+
     @Autowired
     private TokenService tokenService;
 
@@ -66,27 +67,28 @@ public class SysLoginService {
             validateCaptcha(username, code, uuid);
         }
         // 用户验证
-        Authentication authentication = null;
+        Authentication authentication;
         try {
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+            //设置权限上下文
             AuthenticationContextHolder.setContext(authenticationToken);
-            // 该方法会去调用UserDetailsServiceImpl.loadUserByUsername
+            //该方法会去调用UserDetailsServiceImpl.loadUserByUsername
             authentication = authenticationManager.authenticate(authenticationToken);
         } catch (Exception e) {
             if (e instanceof BadCredentialsException) {
-                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.password.not.match")));
+                AsyncManager.me().execute(AsyncFactory.recordLoginInfo(username, Constants.LOGIN_FAIL, MessageUtils.message("user.password.not.match")));
                 throw new UserPasswordNotMatchException();
             } else {
-                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, e.getMessage()));
+                AsyncManager.me().execute(AsyncFactory.recordLoginInfo(username, Constants.LOGIN_FAIL, e.getMessage()));
                 throw new ServiceException(e.getMessage());
             }
         } finally {
             AuthenticationContextHolder.clearContext();
         }
-        AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
+        AsyncManager.me().execute(AsyncFactory.recordLoginInfo(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         recordLoginInfo(loginUser.getUserId());
-        // 生成token
+        //生成token
         return tokenService.createToken(loginUser);
     }
 
@@ -103,11 +105,11 @@ public class SysLoginService {
         String captcha = redisCache.getCacheObject(verifyKey);
         redisCache.deleteObject(verifyKey);
         if (captcha == null) {
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire")));
+            AsyncManager.me().execute(AsyncFactory.recordLoginInfo(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire")));
             throw new CaptchaExpireException();
         }
         if (!code.equalsIgnoreCase(captcha)) {
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.error")));
+            AsyncManager.me().execute(AsyncFactory.recordLoginInfo(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.error")));
             throw new CaptchaException();
         }
     }
@@ -124,4 +126,5 @@ public class SysLoginService {
         sysUser.setLoginDate(DateUtils.getNowDate());
         userService.updateUserProfile(sysUser);
     }
+
 }

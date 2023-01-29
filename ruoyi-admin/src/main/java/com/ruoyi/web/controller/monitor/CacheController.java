@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import com.ruoyi.common.utils.Asserts;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisServerCommands;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.constant.CacheConstants;
-import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.web.domain.AjaxResult;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.SysCache;
 
@@ -66,7 +67,7 @@ public class CacheController {
         result.put("dbSize", dbSize);
 
         List<Map<String, String>> pieList = new ArrayList<>();
-        assert commandStats != null;
+        Asserts.isNotNull(commandStats,()->new RuntimeException("commandStats 不能为NULL"));
         commandStats.stringPropertyNames().forEach(key -> {
             Map<String, String> data = new HashMap<>(2);
             String property = commandStats.getProperty(key);

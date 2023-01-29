@@ -1,6 +1,6 @@
 package com.ruoyi.system.service;
 
-import com.ruoyi.common.core.domain.model.LoginUser;
+import com.ruoyi.common.web.domain.model.LoginUser;
 import com.ruoyi.system.domain.SysUserOnline;
 
 /**

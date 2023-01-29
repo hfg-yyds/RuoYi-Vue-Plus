@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import com.alibaba.fastjson2.JSON;
 import com.ruoyi.common.annotation.RepeatSubmit;
 import com.ruoyi.common.constant.CacheConstants;
-import com.ruoyi.common.core.redis.RedisCache;
+import com.ruoyi.common.redis.RedisCache;
 import com.ruoyi.common.filter.RepeatedlyRequestWrapper;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.http.HttpHelper;
@@ -26,19 +26,36 @@ import com.ruoyi.framework.interceptor.RepeatSubmitInterceptor;
 @Component
 public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
 
+    /**
+     * REPEAT_PARAMS
+     */
     public final String REPEAT_PARAMS = "repeatParams";
 
+    /**
+     * REPEAT_TIME
+     */
     public final String REPEAT_TIME = "repeatTime";
 
-    // 令牌自定义标识
+    /**
+     * 令牌自定义标识
+     */
     @Value("${token.header}")
     private String header;
 
+    /**
+     * Redis缓存
+     */
     @Autowired
     private RedisCache redisCache;
 
-    @SuppressWarnings("unchecked")
+    /**
+     * 重复提交
+     * @param request 请求
+     * @param annotation 注解
+     * @return boolean
+     */
     @Override
+    @SuppressWarnings("unchecked")
     public boolean isRepeatSubmit(HttpServletRequest request, RepeatSubmit annotation) {
         String nowParams = "";
         if (request instanceof RepeatedlyRequestWrapper) {
@@ -81,6 +98,9 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
 
     /**
      * 判断参数是否相同
+     * @param nowMap map
+     * @param preMap map
+     * @return boolean
      */
     private boolean compareParams(Map<String, Object> nowMap, Map<String, Object> preMap) {
         String nowParams = (String) nowMap.get(REPEAT_PARAMS);
@@ -90,6 +110,10 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
 
     /**
      * 判断两次间隔时间
+     * @param nowMap map
+     * @param preMap map
+     * @param interval 值
+     * @return boolean
      */
     private boolean compareTime(Map<String, Object> nowMap, Map<String, Object> preMap, int interval) {
         long time1 = (Long) nowMap.get(REPEAT_TIME);

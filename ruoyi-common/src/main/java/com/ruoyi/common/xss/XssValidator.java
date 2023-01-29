@@ -13,7 +13,16 @@ import java.util.regex.Pattern;
  * @author ruoyi
  */
 public class XssValidator implements ConstraintValidator<Xss, String> {
-    private static final String HTML_PATTERN = "<(\\S*?)[^>]*>.*?|<.*? />";
+
+    /**
+     * html字符串值
+     */
+    private String HTML_PATTERN;
+
+    @Override
+    public void initialize(Xss constraintAnnotation) {
+        this.HTML_PATTERN = "<(\\S*?)[^>]*>.*?|<.*? />";
+    }
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
@@ -23,9 +32,15 @@ public class XssValidator implements ConstraintValidator<Xss, String> {
         return !containsHtml(value);
     }
 
-    public static boolean containsHtml(String value) {
+    /**
+     * 验证字符串是否支持HTML
+     * @param value 字符串值
+     * @return boolean
+     */
+    private boolean containsHtml(String value) {
         Pattern pattern = Pattern.compile(HTML_PATTERN);
         Matcher matcher = pattern.matcher(value);
         return matcher.matches();
     }
+
 }

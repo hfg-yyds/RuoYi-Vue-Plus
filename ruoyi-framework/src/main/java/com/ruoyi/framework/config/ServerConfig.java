@@ -23,6 +23,11 @@ public class ServerConfig {
         return getDomain(request);
     }
 
+    /**
+     * 获取领域
+     * @param request 请求
+     * @return 领域
+     */
     public static String getDomain(HttpServletRequest request) {
         StringBuffer url = request.getRequestURL();
         String contextPath = request.getServletContext().getContextPath();

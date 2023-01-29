@@ -27,8 +27,8 @@ public class FilterConfig {
     @Value("${xss.urlPatterns}")
     private String urlPatterns;
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
     @Bean
+    @SuppressWarnings({"rawtypes", "unchecked"})
     @ConditionalOnProperty(value = "xss.enabled", havingValue = "true")
     public FilterRegistrationBean xssFilterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
@@ -37,14 +37,14 @@ public class FilterConfig {
         registration.addUrlPatterns(StringUtils.split(urlPatterns, ","));
         registration.setName("xssFilter");
         registration.setOrder(FilterRegistrationBean.HIGHEST_PRECEDENCE);
-        Map<String, String> initParameters = new HashMap<String, String>();
+        Map<String, String> initParameters = new HashMap<>();
         initParameters.put("excludes", excludes);
         registration.setInitParameters(initParameters);
         return registration;
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
     @Bean
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public FilterRegistrationBean someFilterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(new RepeatableFilter());

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import com.ruoyi.common.annotation.DataSource;
+import com.ruoyi.common.annotation.DataSocpe.DataSource;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.datasource.DynamicDataSourceContextHolder;
 
@@ -27,8 +27,8 @@ import com.ruoyi.framework.datasource.DynamicDataSourceContextHolder;
 public class DataSourceAspect {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Pointcut("@annotation(com.ruoyi.common.annotation.DataSource)"
-            + "|| @within(com.ruoyi.common.annotation.DataSource)")
+    @Pointcut("@annotation(com.ruoyi.common.annotation.DataSocpe.DataSource)"
+            + "|| @within(com.ruoyi.common.annotation.DataSocpe.DataSource)")
     public void dsPointCut() {
 
     }

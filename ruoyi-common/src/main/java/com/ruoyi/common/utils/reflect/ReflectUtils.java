@@ -6,14 +6,14 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.Date;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.poi.ss.usermodel.DateUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.text.Convert;
 import com.ruoyi.common.utils.DateUtils;
 
 /**
@@ -21,15 +21,21 @@ import com.ruoyi.common.utils.DateUtils;
  *
  * @author ruoyi
  */
+@Slf4j
 @SuppressWarnings("rawtypes")
 public class ReflectUtils {
+    /**
+     * Set前缀
+     */
     private static final String SETTER_PREFIX = "set";
-
+    /**
+     * Get前缀
+     */
     private static final String GETTER_PREFIX = "get";
-
+    /**
+     * CGLIB前缀
+     */
     private static final String CGLIB_CLASS_SEPARATOR = "$$";
-
-    private static Logger logger = LoggerFactory.getLogger(ReflectUtils.class);
 
     /**
      * 调用Getter方法.
@@ -70,14 +76,14 @@ public class ReflectUtils {
     public static <E> E getFieldValue(final Object obj, final String fieldName) {
         Field field = getAccessibleField(obj, fieldName);
         if (field == null) {
-            logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
+            log.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
             return null;
         }
         E result = null;
         try {
             result = (E) field.get(obj);
         } catch (IllegalAccessException e) {
-            logger.error("不可能抛出的异常{}", e.getMessage());
+            log.error("不可能抛出的异常{}", e.getMessage());
         }
         return result;
     }
@@ -89,13 +95,13 @@ public class ReflectUtils {
         Field field = getAccessibleField(obj, fieldName);
         if (field == null) {
             // throw new IllegalArgumentException("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
-            logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
+            log.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
             return;
         }
         try {
             field.set(obj, value);
         } catch (IllegalAccessException e) {
-            logger.error("不可能抛出的异常: {}", e.getMessage());
+            log.error("不可能抛出的异常: {}", e.getMessage());
         }
     }
 
@@ -112,13 +118,13 @@ public class ReflectUtils {
         }
         Method method = getAccessibleMethod(obj, methodName, parameterTypes);
         if (method == null) {
-            logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
+            log.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
             return null;
         }
         try {
             return (E) method.invoke(obj, args);
         } catch (Exception e) {
-            String msg = "method: " + method + ", obj: " + obj + ", args: " + args + "";
+            String msg = "method: " + method + ", obj: " + obj + ", args: " + Arrays.toString(args) + "";
             throw convertReflectionExceptionToUnchecked(msg, e);
         }
     }
@@ -133,7 +139,7 @@ public class ReflectUtils {
         Method method = getAccessibleMethodByName(obj, methodName, args.length);
         if (method == null) {
             // 如果为空不报错，直接返回空。
-            logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
+            log.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
             return null;
         }
         try {
@@ -167,7 +173,7 @@ public class ReflectUtils {
             }
             return (E) method.invoke(obj, args);
         } catch (Exception e) {
-            String msg = "method: " + method + ", obj: " + obj + ", args: " + args + "";
+            String msg = "method: " + method + ", obj: " + obj + ", args: " + Arrays.toString(args) + "";
             throw convertReflectionExceptionToUnchecked(msg, e);
         }
     }
@@ -188,7 +194,7 @@ public class ReflectUtils {
                 makeAccessible(field);
                 return field;
             } catch (NoSuchFieldException e) {
-                continue;
+                log.error("NoSuchFieldException:"+e);
             }
         }
         return null;
@@ -213,7 +219,7 @@ public class ReflectUtils {
                 makeAccessible(method);
                 return method;
             } catch (NoSuchMethodException e) {
-                continue;
+                log.error("NoSuchMethodException:"+e);
             }
         }
         return null;
@@ -268,31 +274,31 @@ public class ReflectUtils {
      * 如无法找到, 返回Object.class.
      */
     @SuppressWarnings("unchecked")
-    public static <T> Class<T> getClassGenricType(final Class clazz) {
-        return getClassGenricType(clazz, 0);
+    public static <T> Class<T> getClassGenericType(final Class clazz) {
+        return getClassGenericType(clazz, 0);
     }
 
     /**
      * 通过反射, 获得Class定义中声明的父类的泛型参数的类型.
      * 如无法找到, 返回Object.class.
      */
-    public static Class getClassGenricType(final Class clazz, final int index) {
+    public static Class getClassGenericType(final Class clazz, final int index) {
         Type genType = clazz.getGenericSuperclass();
 
         if (!(genType instanceof ParameterizedType)) {
-            logger.debug(clazz.getSimpleName() + "'s superclass not ParameterizedType");
+            log.debug(clazz.getSimpleName() + "'s superclass not ParameterizedType");
             return Object.class;
         }
 
         Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
 
         if (index >= params.length || index < 0) {
-            logger.debug("Index: " + index + ", Size of " + clazz.getSimpleName() + "'s Parameterized Type: "
+            log.debug("Index: " + index + ", Size of " + clazz.getSimpleName() + "'s Parameterized Type: "
                     + params.length);
             return Object.class;
         }
         if (!(params[index] instanceof Class)) {
-            logger.debug(clazz.getSimpleName() + " not set the actual class on superclass generic parameter");
+            log.debug(clazz.getSimpleName() + " not set the actual class on superclass generic parameter");
             return Object.class;
         }
 

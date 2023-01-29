@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.RegExUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
@@ -65,7 +66,7 @@ public class PermitAllUrlProperties implements InitializingBean, ApplicationCont
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext context) throws BeansException {
+    public void setApplicationContext(@NotNull ApplicationContext context) throws BeansException {
         this.applicationContext = context;
     }
 

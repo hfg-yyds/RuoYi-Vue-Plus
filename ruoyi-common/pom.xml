@@ -35,10 +35,16 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <!-- pagehelper 分页插件 -->
+        <!-- PageHelper 分页插件 -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!--MybatisPlus-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
 
         <!-- 自定义验证注解 -->

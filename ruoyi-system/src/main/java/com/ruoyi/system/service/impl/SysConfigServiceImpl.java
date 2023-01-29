@@ -5,13 +5,14 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ruoyi.common.annotation.DataSource;
+import com.ruoyi.common.annotation.DataSocpe.DataSource;
 import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.UserConstants;
-import com.ruoyi.common.core.redis.RedisCache;
-import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.redis.RedisCache;
+import com.ruoyi.common.text.Convert;
 import com.ruoyi.common.enums.DataSourceType;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StringUtils;
@@ -24,8 +25,10 @@ import com.ruoyi.system.service.ISysConfigService;
  *
  * @author ruoyi
  */
+@Slf4j
 @Service
 public class SysConfigServiceImpl implements ISysConfigService {
+
     @Resource
     private SysConfigMapper configMapper;
 

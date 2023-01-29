@@ -9,7 +9,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import com.alibaba.fastjson2.JSON;
 import com.ruoyi.common.annotation.RepeatSubmit;
-import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.web.domain.AjaxResult;
 import com.ruoyi.common.utils.ServletUtils;
 
 /**

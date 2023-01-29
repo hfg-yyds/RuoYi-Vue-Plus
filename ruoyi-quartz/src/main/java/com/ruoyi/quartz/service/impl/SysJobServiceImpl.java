@@ -2,6 +2,7 @@ package com.ruoyi.quartz.service.impl;
 
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 
 import org.quartz.JobDataMap;
 import org.quartz.JobKey;
@@ -25,10 +26,11 @@ import com.ruoyi.quartz.util.ScheduleUtils;
  */
 @Service
 public class SysJobServiceImpl implements ISysJobService {
+
     @Autowired
     private Scheduler scheduler;
 
-    @Autowired
+    @Resource
     private SysJobMapper jobMapper;
 
     /**
@@ -75,7 +77,7 @@ public class SysJobServiceImpl implements ISysJobService {
     public int pauseJob(SysJob job) throws SchedulerException {
         Long jobId = job.getJobId();
         String jobGroup = job.getJobGroup();
-        job.setStatus(ScheduleConstants.Status.PAUSE.getValue());
+        job.setStatus(ScheduleConstants.Status.PAUSE.value());
         int rows = jobMapper.updateJob(job);
         if (rows > 0) {
             scheduler.pauseJob(ScheduleUtils.getJobKey(jobId, jobGroup));
@@ -93,7 +95,7 @@ public class SysJobServiceImpl implements ISysJobService {
     public int resumeJob(SysJob job) throws SchedulerException {
         Long jobId = job.getJobId();
         String jobGroup = job.getJobGroup();
-        job.setStatus(ScheduleConstants.Status.NORMAL.getValue());
+        job.setStatus(ScheduleConstants.Status.NORMAL.value());
         int rows = jobMapper.updateJob(job);
         if (rows > 0) {
             scheduler.resumeJob(ScheduleUtils.getJobKey(jobId, jobGroup));
@@ -143,9 +145,9 @@ public class SysJobServiceImpl implements ISysJobService {
     public int changeStatus(SysJob job) throws SchedulerException {
         int rows = 0;
         String status = job.getStatus();
-        if (ScheduleConstants.Status.NORMAL.getValue().equals(status)) {
+        if (ScheduleConstants.Status.NORMAL.value().equals(status)) {
             rows = resumeJob(job);
-        } else if (ScheduleConstants.Status.PAUSE.getValue().equals(status)) {
+        } else if (ScheduleConstants.Status.PAUSE.value().equals(status)) {
             rows = pauseJob(job);
         }
         return rows;
@@ -182,7 +184,7 @@ public class SysJobServiceImpl implements ISysJobService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insertJob(SysJob job) throws SchedulerException, TaskException {
-        job.setStatus(ScheduleConstants.Status.PAUSE.getValue());
+        job.setStatus(ScheduleConstants.Status.PAUSE.value());
         int rows = jobMapper.insertJob(job);
         if (rows > 0) {
             ScheduleUtils.createScheduleJob(scheduler, job);

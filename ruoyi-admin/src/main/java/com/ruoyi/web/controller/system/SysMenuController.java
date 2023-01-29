@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.UserConstants;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.core.domain.entity.SysMenu;
+import com.ruoyi.common.web.controller.BaseController;
+import com.ruoyi.common.web.domain.AjaxResult;
+import com.ruoyi.common.web.domain.entity.SysMenu;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.service.ISysMenuService;
@@ -82,7 +82,7 @@ public class SysMenuController extends BaseController {
     public AjaxResult add(@Validated @RequestBody SysMenu menu) {
         if (UserConstants.NOT_UNIQUE.equals(menuService.checkMenuNameUnique(menu))) {
             return error("新增菜单'" + menu.getMenuName() + "'失败，菜单名称已存在");
-        } else if (UserConstants.YES_FRAME.equals(menu.getIsFrame()) && !StringUtils.ishttp(menu.getPath())) {
+        } else if (UserConstants.YES_FRAME.equals(menu.getIsFrame()) && !StringUtils.isHttp(menu.getPath())) {
             return error("新增菜单'" + menu.getMenuName() + "'失败，地址必须以http(s)://开头");
         }
         menu.setCreateBy(getUsername());
@@ -98,7 +98,7 @@ public class SysMenuController extends BaseController {
     public AjaxResult edit(@Validated @RequestBody SysMenu menu) {
         if (UserConstants.NOT_UNIQUE.equals(menuService.checkMenuNameUnique(menu))) {
             return error("修改菜单'" + menu.getMenuName() + "'失败，菜单名称已存在");
-        } else if (UserConstants.YES_FRAME.equals(menu.getIsFrame()) && !StringUtils.ishttp(menu.getPath())) {
+        } else if (UserConstants.YES_FRAME.equals(menu.getIsFrame()) && !StringUtils.isHttp(menu.getPath())) {
             return error("修改菜单'" + menu.getMenuName() + "'失败，地址必须以http(s)://开头");
         } else if (menu.getMenuId().equals(menu.getParentId())) {
             return error("修改菜单'" + menu.getMenuName() + "'失败，上级菜单不能选择自己");

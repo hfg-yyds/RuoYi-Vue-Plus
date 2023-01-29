@@ -52,7 +52,7 @@ public class MetaVo {
         this.title = title;
         this.icon = icon;
         this.noCache = noCache;
-        if (StringUtils.ishttp(link)) {
+        if (StringUtils.isHttp(link)) {
             this.link = link;
         }
     }

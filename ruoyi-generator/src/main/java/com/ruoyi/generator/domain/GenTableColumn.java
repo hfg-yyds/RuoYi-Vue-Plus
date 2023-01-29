@@ -2,7 +2,7 @@ package com.ruoyi.generator.domain;
 
 import javax.validation.constraints.NotBlank;
 
-import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.common.web.domain.BaseEntity;
 import com.ruoyi.common.utils.StringUtils;
 
 /**
@@ -11,6 +11,7 @@ import com.ruoyi.common.utils.StringUtils;
  * @author ruoyi
  */
 public class GenTableColumn extends BaseEntity {
+
     private static final long serialVersionUID = 1L;
 
     /**
@@ -331,13 +332,13 @@ public class GenTableColumn extends BaseEntity {
 
     public String readConverterExp() {
         String remarks = StringUtils.substringBetween(this.columnComment, "（", "）");
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (StringUtils.isNotEmpty(remarks)) {
             for (String value : remarks.split(" ")) {
                 if (StringUtils.isNotEmpty(value)) {
                     Object startStr = value.subSequence(0, 1);
                     String endStr = value.substring(1);
-                    sb.append("").append(startStr).append("=").append(endStr).append(",");
+                    sb.append(startStr).append("=").append(endStr).append(",");
                 }
             }
             return sb.deleteCharAt(sb.length() - 1).toString();

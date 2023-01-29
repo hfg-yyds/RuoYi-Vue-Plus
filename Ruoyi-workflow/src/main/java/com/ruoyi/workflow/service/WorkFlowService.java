@@ -19,11 +19,11 @@ import java.util.List;
 public interface WorkFlowService {
     /**
      * 流程部署
-     * @param multipartFile
-     * @param name
-     * @param source
-     * @return
-     * @throws IOException
+     * @param multipartFile file
+     * @param name 流程名称
+     * @param source 流程来源
+     * @return DeploymentDto
+     * @throws IOException io
      */
     DeploymentDto deployProcess(MultipartFile multipartFile, String name, String source) throws IOException;
 

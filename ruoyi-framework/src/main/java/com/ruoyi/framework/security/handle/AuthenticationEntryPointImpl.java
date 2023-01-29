@@ -9,7 +9,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 import com.alibaba.fastjson2.JSON;
 import com.ruoyi.common.constant.HttpStatus;
-import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.web.domain.AjaxResult;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
 

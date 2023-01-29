@@ -11,7 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.ruoyi.common.constant.HttpStatus;
-import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.web.domain.AjaxResult;
 import com.ruoyi.common.exception.DemoModeException;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StringUtils;
@@ -104,4 +104,5 @@ public class GlobalExceptionHandler {
     public AjaxResult handleDemoModeException(DemoModeException e) {
         return AjaxResult.error("演示模式，不允许操作");
     }
+
 }

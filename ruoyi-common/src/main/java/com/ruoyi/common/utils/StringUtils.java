@@ -9,7 +9,7 @@ import java.util.Set;
 
 import org.springframework.util.AntPathMatcher;
 import com.ruoyi.common.constant.Constants;
-import com.ruoyi.common.core.text.StrFormatter;
+import com.ruoyi.common.text.StrFormatter;
 
 /**
  * 字符串工具类
@@ -20,7 +20,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     /**
      * 空字符串
      */
-    private static final String NULLSTR = "";
+    private static final String NULL_STR = "";
 
     /**
      * 下划线
@@ -104,7 +104,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @return true：为空 false：非空
      */
     public static boolean isEmpty(String str) {
-        return isNull(str) || NULLSTR.equals(str.trim());
+        return isNull(str) || NULL_STR.equals(str.trim());
     }
 
     /**
@@ -163,7 +163,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      */
     public static String substring(final String str, int start) {
         if (str == null) {
-            return NULLSTR;
+            return NULL_STR;
         }
 
         if (start < 0) {
@@ -174,7 +174,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
             start = 0;
         }
         if (start > str.length()) {
-            return NULLSTR;
+            return NULL_STR;
         }
 
         return str.substring(start);
@@ -190,7 +190,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      */
     public static String substring(final String str, int start, int end) {
         if (str == null) {
-            return NULLSTR;
+            return NULL_STR;
         }
 
         if (end < 0) {
@@ -205,7 +205,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         }
 
         if (start > end) {
-            return NULLSTR;
+            return NULL_STR;
         }
 
         if (start < 0) {
@@ -244,7 +244,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @param link 链接
      * @return 结果
      */
-    public static boolean ishttp(String link) {
+    public static boolean isHttp(String link) {
         return StringUtils.startsWithAny(link, Constants.HTTP, Constants.HTTPS);
     }
 
@@ -255,8 +255,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @param sep 分隔符
      * @return set集合
      */
-    public static final Set<String> str2Set(String str, String sep) {
-        return new HashSet<String>(str2List(str, sep, true, false));
+    public static Set<String> str2Set(String str, String sep) {
+        return new HashSet<>(str2List(str, sep, true, false));
     }
 
     /**
@@ -268,8 +268,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @param trim        去掉首尾空白
      * @return list集合
      */
-    public static final List<String> str2List(String str, String sep, boolean filterBlank, boolean trim) {
-        List<String> list = new ArrayList<String>();
+    public static List<String> str2List(String str, String sep, boolean filterBlank, boolean trim) {
+        List<String> list = new ArrayList<>();
         if (StringUtils.isEmpty(str)) {
             return list;
         }
@@ -295,21 +295,18 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     /**
      * 判断给定的set列表中是否包含数组array 判断给定的数组array中是否包含给定的元素value
      *
-     * @param set   给定的集合
      * @param array 给定的数组
      * @return boolean 结果
      */
     public static boolean containsAny(Collection<String> collection, String... array) {
-        if (isEmpty(collection) || isEmpty(array)) {
-            return false;
-        } else {
+        if (!isEmpty(collection) && !isEmpty(array)) {
             for (String str : array) {
                 if (collection.contains(str)) {
                     return true;
                 }
             }
-            return false;
         }
+        return false;
     }
 
     /**
@@ -340,11 +337,11 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         }
         StringBuilder sb = new StringBuilder();
         // 前置字符是否大写
-        boolean preCharIsUpperCase = true;
+        boolean preCharIsUpperCase;
         // 当前字符是否大写
-        boolean curreCharIsUpperCase = true;
+        boolean currCharIsUpperCase;
         // 下一字符是否大写
-        boolean nexteCharIsUpperCase = true;
+        boolean nextCharIsUpperCase = true;
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
             if (i > 0) {
@@ -353,15 +350,15 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
                 preCharIsUpperCase = false;
             }
 
-            curreCharIsUpperCase = Character.isUpperCase(c);
+            currCharIsUpperCase = Character.isUpperCase(c);
 
             if (i < (str.length() - 1)) {
-                nexteCharIsUpperCase = Character.isUpperCase(str.charAt(i + 1));
+                nextCharIsUpperCase = Character.isUpperCase(str.charAt(i + 1));
             }
 
-            if (preCharIsUpperCase && curreCharIsUpperCase && !nexteCharIsUpperCase) {
+            if (preCharIsUpperCase && currCharIsUpperCase && !nextCharIsUpperCase) {
                 sb.append(SEPARATOR);
-            } else if ((i != 0 && !preCharIsUpperCase) && curreCharIsUpperCase) {
+            } else if ((i != 0 && !preCharIsUpperCase) && currCharIsUpperCase) {
                 sb.append(SEPARATOR);
             }
             sb.append(Character.toLowerCase(c));
@@ -374,12 +371,12 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * 是否包含字符串
      *
      * @param str  验证字符串
-     * @param strs 字符串组
+     * @param strArray 字符串组
      * @return 包含返回true
      */
-    public static boolean inStringIgnoreCase(String str, String... strs) {
-        if (str != null && strs != null) {
-            for (String s : strs) {
+    public static boolean inStringIgnoreCase(String str, String... strArray) {
+        if (str != null && strArray != null) {
+            for (String s : strArray) {
                 if (str.equalsIgnoreCase(trim(s))) {
                     return true;
                 }
@@ -447,14 +444,14 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * 查找指定字符串是否匹配指定字符串列表中的任意一个字符串
      *
      * @param str  指定字符串
-     * @param strs 需要检查的字符串数组
+     * @param strList 需要检查的字符串数组
      * @return 是否匹配
      */
-    public static boolean matches(String str, List<String> strs) {
-        if (isEmpty(str) || isEmpty(strs)) {
+    public static boolean matches(String str, List<String> strList) {
+        if (isEmpty(str) || isEmpty(strList)) {
             return false;
         }
-        for (String pattern : strs) {
+        for (String pattern : strList) {
             if (isMatch(pattern, str)) {
                 return true;
             }
@@ -470,7 +467,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      *
      * @param pattern 匹配规则
      * @param url     需要匹配的url
-     * @return
+     * @return boolean
      */
     public static boolean isMatch(String pattern, String url) {
         AntPathMatcher matcher = new AntPathMatcher();
@@ -489,8 +486,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @param size 字符串指定长度
      * @return 返回数字的字符串格式，该字符串为指定长度。
      */
-    public static final String padl(final Number num, final int size) {
-        return padl(num.toString(), size, '0');
+    public static String padLeft(final Number num, final int size) {
+        return padLeft(num.toString(), size, '0');
     }
 
     /**
@@ -501,7 +498,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @param c    用于补齐的字符
      * @return 返回指定长度的字符串，由原字符串左补齐或截取得到。
      */
-    public static final String padl(final String s, final int size, final char c) {
+    public static String padLeft(final String s, final int size, final char c) {
         final StringBuilder sb = new StringBuilder(size);
         if (s != null) {
             final int len = s.length();

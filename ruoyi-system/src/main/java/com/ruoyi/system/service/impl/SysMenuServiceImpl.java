@@ -13,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.constant.UserConstants;
-import com.ruoyi.common.core.domain.TreeSelect;
-import com.ruoyi.common.core.domain.entity.SysMenu;
-import com.ruoyi.common.core.domain.entity.SysRole;
-import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.web.domain.TreeSelect;
+import com.ruoyi.common.web.domain.entity.SysMenu;
+import com.ruoyi.common.web.domain.entity.SysRole;
+import com.ruoyi.common.web.domain.entity.SysUser;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.vo.MetaVo;
@@ -385,7 +385,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @return 结果
      */
     public boolean isInnerLink(SysMenu menu) {
-        return menu.getIsFrame().equals(UserConstants.NO_FRAME) && StringUtils.ishttp(menu.getPath());
+        return menu.getIsFrame().equals(UserConstants.NO_FRAME) && StringUtils.isHttp(menu.getPath());
     }
 
     /**

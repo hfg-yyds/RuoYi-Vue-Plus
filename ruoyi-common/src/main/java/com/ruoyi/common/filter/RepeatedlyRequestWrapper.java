@@ -19,6 +19,7 @@ import com.ruoyi.common.constant.Constants;
  * @author ruoyi
  */
 public class RepeatedlyRequestWrapper extends HttpServletRequestWrapper {
+
     private final byte[] body;
 
     public RepeatedlyRequestWrapper(HttpServletRequest request, ServletResponse response) throws IOException {

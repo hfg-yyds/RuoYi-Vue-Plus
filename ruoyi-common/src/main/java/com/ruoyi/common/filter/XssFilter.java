@@ -2,6 +2,7 @@ package com.ruoyi.common.filter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -14,26 +15,27 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.enums.HttpMethod;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 防止XSS攻击的过滤器
  *
  * @author ruoyi
  */
+@Slf4j
 public class XssFilter implements Filter {
+
     /**
      * 排除链接
      */
     public List<String> excludes = new ArrayList<>();
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         String tempExcludes = filterConfig.getInitParameter("excludes");
         if (StringUtils.isNotEmpty(tempExcludes)) {
             String[] url = tempExcludes.split(",");
-            for (int i = 0; url != null && i < url.length; i++) {
-                excludes.add(url[i]);
-            }
+            Collections.addAll(excludes, url);
         }
     }
 
@@ -62,6 +64,7 @@ public class XssFilter implements Filter {
 
     @Override
     public void destroy() {
-
+        log.info("XssFilter destroy !");
     }
+
 }

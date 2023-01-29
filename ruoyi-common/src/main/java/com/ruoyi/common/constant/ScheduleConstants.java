@@ -1,5 +1,7 @@
 package com.ruoyi.common.constant;
 
+import com.ruoyi.common.enums.IEnum;
+
 /**
  * 任务调度通用常量
  *
@@ -34,7 +36,7 @@ public class ScheduleConstants {
      */
     public static final String MISFIRE_DO_NOTHING = "3";
 
-    public enum Status {
+    public enum Status implements IEnum<String> {
         /**
          * 正常
          */
@@ -46,12 +48,14 @@ public class ScheduleConstants {
 
         private String value;
 
-        private Status(String value) {
+        Status(String value) {
             this.value = value;
         }
 
-        public String getValue() {
-            return value;
+        @Override
+        public String value() {
+            return this.value;
         }
+
     }
 }

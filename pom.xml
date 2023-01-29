@@ -32,6 +32,7 @@
         <velocity.version>2.3</velocity.version>
         <jwt.version>0.9.1</jwt.version>
         <hutool.version>5.8.8</hutool.version>
+        <mybatis-plus.version>3.5.2</mybatis-plus.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -189,6 +190,12 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
             </dependency>
 
         </dependencies>

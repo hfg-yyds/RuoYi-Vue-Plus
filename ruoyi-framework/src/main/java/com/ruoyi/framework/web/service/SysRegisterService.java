@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.constant.UserConstants;
-import com.ruoyi.common.core.domain.entity.SysUser;
-import com.ruoyi.common.core.domain.model.RegisterBody;
-import com.ruoyi.common.core.redis.RedisCache;
+import com.ruoyi.common.web.domain.entity.SysUser;
+import com.ruoyi.common.web.domain.model.RegisterBody;
+import com.ruoyi.common.redis.RedisCache;
 import com.ruoyi.common.exception.user.CaptchaException;
 import com.ruoyi.common.exception.user.CaptchaExpireException;
 import com.ruoyi.common.utils.MessageUtils;
@@ -67,7 +67,7 @@ public class SysRegisterService {
             if (!regFlag) {
                 msg = "注册失败,请联系系统管理人员";
             } else {
-                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.REGISTER, MessageUtils.message("user.register.success")));
+                AsyncManager.me().execute(AsyncFactory.recordLoginInfo(username, Constants.REGISTER, MessageUtils.message("user.register.success")));
             }
         }
         return msg;

@@ -8,8 +8,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.Constants;
-import com.ruoyi.common.core.domain.entity.SysUser;
-import com.ruoyi.common.core.redis.RedisCache;
+import com.ruoyi.common.web.domain.entity.SysUser;
+import com.ruoyi.common.redis.RedisCache;
 import com.ruoyi.common.exception.user.UserPasswordNotMatchException;
 import com.ruoyi.common.exception.user.UserPasswordRetryLimitExceedException;
 import com.ruoyi.common.utils.MessageUtils;
@@ -25,6 +25,7 @@ import com.ruoyi.framework.security.context.AuthenticationContextHolder;
  */
 @Component
 public class SysPasswordService {
+
     @Autowired
     private RedisCache redisCache;
 
@@ -55,15 +56,15 @@ public class SysPasswordService {
             retryCount = 0;
         }
 
-        if (retryCount >= Integer.valueOf(maxRetryCount).intValue()) {
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL,
+        if (retryCount >= maxRetryCount) {
+            AsyncManager.me().execute(AsyncFactory.recordLoginInfo(username, Constants.LOGIN_FAIL,
                     MessageUtils.message("user.password.retry.limit.exceed", maxRetryCount, lockTime)));
             throw new UserPasswordRetryLimitExceedException(maxRetryCount, lockTime);
         }
 
         if (!matches(user, password)) {
             retryCount = retryCount + 1;
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL,
+            AsyncManager.me().execute(AsyncFactory.recordLoginInfo(username, Constants.LOGIN_FAIL,
                     MessageUtils.message("user.password.retry.limit.count", retryCount)));
             redisCache.setCacheObject(getCacheKey(username), retryCount, lockTime, TimeUnit.MINUTES);
             throw new UserPasswordNotMatchException();

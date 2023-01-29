@@ -16,7 +16,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import com.ruoyi.common.constant.Constants;
-import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.text.Convert;
 
 /**
  * 客户端工具类
@@ -24,6 +24,7 @@ import com.ruoyi.common.core.text.Convert;
  * @author ruoyi
  */
 public class ServletUtils {
+
     /**
      * 获取String参数
      */
@@ -112,6 +113,10 @@ public class ServletUtils {
         return getRequest().getSession();
     }
 
+    /**
+     * 获取ServletRequestAttributes
+     * @return ServletRequestAttributes
+     */
     public static ServletRequestAttributes getRequestAttributes() {
         RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
         return (ServletRequestAttributes) attributes;
@@ -137,7 +142,7 @@ public class ServletUtils {
     /**
      * 是否是Ajax异步请求
      *
-     * @param request
+     * @param request request
      */
     public static boolean isAjaxRequest(HttpServletRequest request) {
         String accept = request.getHeader("accept");
@@ -186,4 +191,5 @@ public class ServletUtils {
             return StringUtils.EMPTY;
         }
     }
+
 }
