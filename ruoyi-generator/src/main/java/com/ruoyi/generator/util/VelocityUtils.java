@@ -125,7 +125,7 @@ public class VelocityUtils {
      * @return 模板列表
      */
     public static List<String> getTemplateList(String tplCategory) {
-        List<String> templates = new ArrayList<String>();
+        List<String> templates = new ArrayList<>();
         templates.add("vm/java/domain.java.vm");
         templates.add("vm/java/mapper.java.vm");
         templates.add("vm/java/service.java.vm");
@@ -211,7 +211,7 @@ public class VelocityUtils {
     public static HashSet<String> getImportList(GenTable genTable) {
         List<GenTableColumn> columns = genTable.getColumns();
         GenTable subGenTable = genTable.getSubTable();
-        HashSet<String> importList = new HashSet<String>();
+        HashSet<String> importList = new HashSet<>();
         if (StringUtils.isNotNull(subGenTable)) {
             importList.add("java.util.List");
         }
@@ -234,7 +234,7 @@ public class VelocityUtils {
      */
     public static String getDicts(GenTable genTable) {
         List<GenTableColumn> columns = genTable.getColumns();
-        Set<String> dicts = new HashSet<String>();
+        Set<String> dicts = new HashSet<>();
         addDicts(dicts, columns);
         if (StringUtils.isNotNull(genTable.getSubTable())) {
             List<GenTableColumn> subColumns = genTable.getSubTable().getColumns();

@@ -24,22 +24,22 @@ public class SysLoginInfoServiceImpl implements ISysLoginInfoService {
     /**
      * 新增系统登录日志
      *
-     * @param logininfor 访问日志对象
+     * @param loginInfo 访问日志对象
      */
     @Override
-    public void insertLogininfor(SysLogininfor logininfor) {
-        logininforMapper.insertLogininfor(logininfor);
+    public void insertLoginInfo(SysLogininfor loginInfo) {
+        logininforMapper.insertLogininfor(loginInfo);
     }
 
     /**
      * 查询系统登录日志集合
      *
-     * @param logininfor 访问日志对象
+     * @param loginInfo 访问日志对象
      * @return 登录记录集合
      */
     @Override
-    public List<SysLogininfor> selectLogininforList(SysLogininfor logininfor) {
-        return logininforMapper.selectLogininforList(logininfor);
+    public List<SysLogininfor> selectLoginInfoList(SysLogininfor loginInfo) {
+        return logininforMapper.selectLogininforList(loginInfo);
     }
 
     /**
@@ -49,7 +49,7 @@ public class SysLoginInfoServiceImpl implements ISysLoginInfoService {
      * @return 结果
      */
     @Override
-    public int deleteLogininforByIds(Long[] infoIds) {
+    public int deleteLoginInfoByIds(Long[] infoIds) {
         return logininforMapper.deleteLogininforByIds(infoIds);
     }
 
@@ -57,7 +57,7 @@ public class SysLoginInfoServiceImpl implements ISysLoginInfoService {
      * 清空系统登录日志
      */
     @Override
-    public void cleanLogininfor() {
+    public void cleanLoginInfo() {
         logininforMapper.cleanLogininfor();
     }
 }

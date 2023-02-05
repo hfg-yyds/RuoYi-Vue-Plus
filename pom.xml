@@ -176,9 +176,10 @@
             <!-- 工作流模块-->
             <dependency>
                 <groupId>com.ruoyi</groupId>
-                <artifactId>Ruoyi-workflow</artifactId>
+                <artifactId>ruoyi-workflow</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
+
             <!-- 通用工具-->
             <dependency>
                 <groupId>com.ruoyi</groupId>
@@ -209,6 +210,7 @@
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
         <module>Ruoyi-workflow</module>
+        <module>ruoyi-test</module>
     </modules>
     <packaging>pom</packaging>
 

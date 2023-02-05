@@ -30,6 +30,7 @@ import com.ruoyi.system.service.ISysConfigService;
 @Api(value = "验证码操作处理")
 @RestController
 public class CaptchaController {
+
     /**
      * 验证码类型 math 数组计算
      */
@@ -39,15 +40,26 @@ public class CaptchaController {
      */
     public static final String CHAR = "char";
 
+    /**
+     * 验证码服务
+     */
     @Resource(name = "captchaProducer")
     private Producer captchaProducer;
 
+    /**
+     * 验证码数字服务
+     */
     @Resource(name = "captchaProducerMath")
     private Producer captchaProducerMath;
 
+    /**
+     * Redis服务工具类
+     */
     @Autowired
     private RedisCache redisCache;
-
+    /**
+     * 系统配置服务
+     */
     @Autowired
     private ISysConfigService configService;
 
@@ -59,22 +71,25 @@ public class CaptchaController {
     @ApiOperation(value = "生成验证码")
     public AjaxResult getCode() {
         AjaxResult ajax = AjaxResult.success();
+        //查询验证码开关是否开启
         boolean captchaEnabled = configService.selectCaptchaEnabled();
         ajax.put("captchaEnabled", captchaEnabled);
         if (!captchaEnabled) {
             return ajax;
         }
-
         // 保存验证码信息
         String uuid = IdUtils.simpleUUID();
+        //验证码确认Key
         String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + uuid;
 
-        String capStr = null, code = null;
-
+        //验证码字符串   code验证码值
+        String capStr, code = null;
         BufferedImage image = null;
 
-        // 生成验证码
+        //获取验证码的类型
         String captchaType = RuoYiConfig.getCaptchaType();
+
+        //生成验证码
         if (MATH.equals(captchaType)) {
             String capText = captchaProducerMath.createText();
             capStr = capText.substring(0, capText.lastIndexOf("@"));
@@ -89,6 +104,7 @@ public class CaptchaController {
         // 转换流信息写出
         FastByteArrayOutputStream os = new FastByteArrayOutputStream();
         try {
+            assert image != null;
             ImageIO.write(image, "jpg", os);
         } catch (IOException e) {
             return AjaxResult.error(e.getMessage());

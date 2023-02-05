@@ -11,7 +11,7 @@ import com.ruoyi.common.annotation.excel.Excel.ColumnType;
 import com.ruoyi.common.annotation.excel.Excel.Type;
 import com.ruoyi.common.annotation.excel.Excels;
 import com.ruoyi.common.web.domain.BaseEntity;
-import com.ruoyi.common.xss.Xss;
+import com.ruoyi.common.annotation.valid.Xss;
 
 /**
  * 用户对象 sys_user

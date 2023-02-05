@@ -61,8 +61,7 @@
 
         <dependency>
             <groupId>com.ruoyi</groupId>
-            <artifactId>Ruoyi-workflow</artifactId>
-            <version>3.8.5</version>
+            <artifactId>ruoyi-workflow</artifactId>
         </dependency>
 
     </dependencies>

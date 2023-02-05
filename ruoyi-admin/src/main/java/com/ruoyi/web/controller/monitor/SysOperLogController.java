@@ -20,7 +20,7 @@ import com.ruoyi.common.web.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.SysOperLog;
-import com.ruoyi.system.service.ISysOperLogService;
+import com.ruoyi.system.service.ISysOperationLogService;
 
 /**
  * 操作日志记录
@@ -33,7 +33,7 @@ import com.ruoyi.system.service.ISysOperLogService;
 public class SysOperLogController extends BaseController {
 
     @Autowired
-    private ISysOperLogService operLogService;
+    private ISysOperationLogService operLogService;
 
     /**
      * 查询日志

@@ -2,7 +2,6 @@ package com.ruoyi.system.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.exception.ServiceException;
@@ -12,6 +11,8 @@ import com.ruoyi.system.mapper.SysPostMapper;
 import com.ruoyi.system.mapper.SysUserPostMapper;
 import com.ruoyi.system.service.ISysPostService;
 
+import javax.annotation.Resource;
+
 /**
  * 岗位信息 服务层处理
  *
@@ -19,10 +20,11 @@ import com.ruoyi.system.service.ISysPostService;
  */
 @Service
 public class SysPostServiceImpl implements ISysPostService {
-    @Autowired
+
+    @Resource
     private SysPostMapper postMapper;
 
-    @Autowired
+    @Resource
     private SysUserPostMapper userPostMapper;
 
     /**
@@ -76,9 +78,9 @@ public class SysPostServiceImpl implements ISysPostService {
      */
     @Override
     public String checkPostNameUnique(SysPost post) {
-        Long postId = StringUtils.isNull(post.getPostId()) ? -1L : post.getPostId();
+        long postId = StringUtils.isNull(post.getPostId()) ? -1L : post.getPostId();
         SysPost info = postMapper.checkPostNameUnique(post.getPostName());
-        if (StringUtils.isNotNull(info) && info.getPostId().longValue() != postId.longValue()) {
+        if (StringUtils.isNotNull(info) && info.getPostId() != postId) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
@@ -92,9 +94,9 @@ public class SysPostServiceImpl implements ISysPostService {
      */
     @Override
     public String checkPostCodeUnique(SysPost post) {
-        Long postId = StringUtils.isNull(post.getPostId()) ? -1L : post.getPostId();
+        long postId = StringUtils.isNull(post.getPostId()) ? -1L : post.getPostId();
         SysPost info = postMapper.checkPostCodeUnique(post.getPostCode());
-        if (StringUtils.isNotNull(info) && info.getPostId().longValue() != postId.longValue()) {
+        if (StringUtils.isNotNull(info) && info.getPostId() != postId) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;

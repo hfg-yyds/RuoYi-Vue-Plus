@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.web.domain.BaseEntity;
-import com.ruoyi.common.xss.Xss;
+import com.ruoyi.common.annotation.valid.Xss;
 
 /**
  * 通知公告表 sys_notice

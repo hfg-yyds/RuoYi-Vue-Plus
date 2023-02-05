@@ -48,8 +48,6 @@ public class FileUtils {
             while ((length = fis.read(b)) > 0) {
                 os.write(b, 0, length);
             }
-        } catch (IOException e) {
-            throw e;
         } finally {
             IOUtils.close(os);
             IOUtils.close(fis);
@@ -125,16 +123,10 @@ public class FileUtils {
     public static boolean checkAllowDownload(String resource) {
         // 禁止目录上跳级别
         if (StringUtils.contains(resource, "..")) {
-            return false;
-        }
-
-        // 检查允许下载的文件规则
-        if (ArrayUtils.contains(MimeTypeUtils.DEFAULT_ALLOWED_EXTENSION, FileTypeUtils.getFileType(resource))) {
             return true;
         }
-
-        // 不在允许下载的文件规则
-        return false;
+        //检查允许下载的文件规则
+        return !ArrayUtils.contains(MimeTypeUtils.DEFAULT_ALLOWED_EXTENSION, FileTypeUtils.getFileType(resource));
     }
 
     /**
@@ -173,16 +165,14 @@ public class FileUtils {
     public static void setAttachmentResponseHeader(HttpServletResponse response, String realFileName) throws UnsupportedEncodingException {
         String percentEncodedFileName = percentEncode(realFileName);
 
-        StringBuilder contentDispositionValue = new StringBuilder();
-        contentDispositionValue.append("attachment; filename=")
-                .append(percentEncodedFileName)
-                .append(";")
-                .append("filename*=")
-                .append("utf-8''")
-                .append(percentEncodedFileName);
-
         response.addHeader("Access-Control-Expose-Headers", "Content-Disposition,download-filename");
-        response.setHeader("Content-disposition", contentDispositionValue.toString());
+        String contentDispositionValue = "attachment; filename=" +
+                percentEncodedFileName +
+                ";" +
+                "filename*=" +
+                "utf-8''" +
+                percentEncodedFileName;
+        response.setHeader("Content-disposition", contentDispositionValue);
         response.setHeader("download-filename", percentEncodedFileName);
     }
 

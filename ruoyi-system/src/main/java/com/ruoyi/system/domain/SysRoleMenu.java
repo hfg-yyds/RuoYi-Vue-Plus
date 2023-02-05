@@ -42,4 +42,5 @@ public class SysRoleMenu {
                 .append("menuId", getMenuId())
                 .toString();
     }
+
 }

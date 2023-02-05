@@ -8,6 +8,8 @@ import com.ruoyi.common.text.Convert;
 import com.ruoyi.generator.domain.GenTableColumn;
 import com.ruoyi.generator.mapper.GenTableColumnMapper;
 
+import javax.annotation.Resource;
+
 /**
  * 业务字段 服务层实现
  *
@@ -15,7 +17,8 @@ import com.ruoyi.generator.mapper.GenTableColumnMapper;
  */
 @Service
 public class GenTableColumnServiceImpl implements IGenTableColumnService {
-    @Autowired
+
+    @Resource
     private GenTableColumnMapper genTableColumnMapper;
 
     /**

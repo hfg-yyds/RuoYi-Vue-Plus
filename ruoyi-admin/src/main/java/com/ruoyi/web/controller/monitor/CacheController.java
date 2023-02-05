@@ -39,7 +39,7 @@ public class CacheController {
 
     private final static List<SysCache> caches = new ArrayList<>();
 
-    {
+    static {
         caches.add(new SysCache(CacheConstants.LOGIN_TOKEN_KEY, "用户信息"));
         caches.add(new SysCache(CacheConstants.SYS_CONFIG_KEY, "配置信息"));
         caches.add(new SysCache(CacheConstants.SYS_DICT_KEY, "数据字典"));
@@ -120,12 +120,13 @@ public class CacheController {
     /**
      * 缓存名称
      * @param cacheName 缓存名称
-     * @return
+     * @return AjaxResult
      */
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @DeleteMapping("/clearCacheName/{cacheName}")
     public AjaxResult clearCacheName(@PathVariable String cacheName) {
         Collection<String> cacheKeys = redisTemplate.keys(cacheName + "*");
+        assert cacheKeys != null;
         redisTemplate.delete(cacheKeys);
         return AjaxResult.success();
     }
@@ -141,7 +142,9 @@ public class CacheController {
     @DeleteMapping("/clearCacheAll")
     public AjaxResult clearCacheAll() {
         Collection<String> cacheKeys = redisTemplate.keys("*");
+        assert cacheKeys != null;
         redisTemplate.delete(cacheKeys);
         return AjaxResult.success();
     }
+
 }

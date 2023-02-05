@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.ruoyi.web.entity.UserEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +20,6 @@ import com.ruoyi.common.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -35,7 +34,7 @@ public class TestController extends BaseController {
 
     private final static Map<Integer, UserEntity> users = new LinkedHashMap<>();
 
-    {
+    static {
         users.put(1, new UserEntity(1, "admin", "admin123", "15888888888"));
         users.put(2, new UserEntity(2, "ry", "admin123", "15666666666"));
     }
@@ -43,7 +42,7 @@ public class TestController extends BaseController {
     @ApiOperation("获取用户列表")
     @GetMapping("/list")
     public R<List<UserEntity>> userList() {
-        List<UserEntity> userList = new ArrayList<UserEntity>(users.values());
+        List<UserEntity> userList = new ArrayList<>(users.values());
         return R.ok(userList);
     }
 
@@ -98,63 +97,5 @@ public class TestController extends BaseController {
         } else {
             return R.fail("用户不存在");
         }
-    }
-}
-
-@ApiModel(value = "UserEntity", description = "用户实体")
-class UserEntity {
-    @ApiModelProperty("用户ID")
-    private Integer userId;
-
-    @ApiModelProperty("用户名称")
-    private String username;
-
-    @ApiModelProperty("用户密码")
-    private String password;
-
-    @ApiModelProperty("用户手机")
-    private String mobile;
-
-    public UserEntity() {
-
-    }
-
-    public UserEntity(Integer userId, String username, String password, String mobile) {
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
-        this.mobile = mobile;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
     }
 }

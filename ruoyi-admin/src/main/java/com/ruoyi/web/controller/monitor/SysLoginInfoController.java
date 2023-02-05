@@ -40,7 +40,7 @@ public class SysLoginInfoController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo list(SysLogininfor logininfor) {
         startPage();
-        List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
+        List<SysLogininfor> list = logininforService.selectLoginInfoList(logininfor);
         return getDataTable(list);
     }
 
@@ -48,7 +48,7 @@ public class SysLoginInfoController extends BaseController {
     @PreAuthorize("@ss.hasPermi('monitor:logininfor:export')")
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysLogininfor logininfor) {
-        List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
+        List<SysLogininfor> list = logininforService.selectLoginInfoList(logininfor);
         ExcelUtil<SysLogininfor> util = new ExcelUtil<SysLogininfor>(SysLogininfor.class);
         util.exportExcel(response, list, "登录日志");
     }
@@ -57,14 +57,14 @@ public class SysLoginInfoController extends BaseController {
     @Log(title = "登录日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/{infoIds}")
     public AjaxResult remove(@PathVariable Long[] infoIds) {
-        return toAjax(logininforService.deleteLogininforByIds(infoIds));
+        return toAjax(logininforService.deleteLoginInfoByIds(infoIds));
     }
 
     @PreAuthorize("@ss.hasPermi('monitor:logininfor:remove')")
     @Log(title = "登录日志", businessType = BusinessType.CLEAN)
     @DeleteMapping("/clean")
     public AjaxResult clean() {
-        logininforService.cleanLogininfor();
+        logininforService.cleanLoginInfo();
         return success();
     }
 

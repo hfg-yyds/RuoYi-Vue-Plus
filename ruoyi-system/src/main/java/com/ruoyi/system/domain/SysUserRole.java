@@ -42,4 +42,5 @@ public class SysUserRole {
                 .append("roleId", getRoleId())
                 .toString();
     }
+
 }

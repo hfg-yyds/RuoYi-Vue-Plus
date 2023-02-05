@@ -1,5 +1,6 @@
 package com.ruoyi.framework.config;
 
+import com.ruoyi.common.meta.CustomTaskDecorator;
 import com.ruoyi.common.utils.ThreadUtils;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +38,8 @@ public class ThreadPoolConfig {
         executor.setCorePoolSize(corePoolSize);
         executor.setQueueCapacity(queueCapacity);
         executor.setKeepAliveSeconds(keepAliveSeconds);
+        executor.setTaskDecorator(new CustomTaskDecorator());
+        executor.setThreadNamePrefix("RuoYi");
         // 线程池对拒绝任务(无线程可用)的处理策略
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         return executor;

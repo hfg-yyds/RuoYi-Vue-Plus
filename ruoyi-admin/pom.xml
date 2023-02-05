@@ -64,7 +64,7 @@
         <!-- 工作流模块 -->
         <dependency>
             <groupId>com.ruoyi</groupId>
-            <artifactId>Ruoyi-workflow</artifactId>
+            <artifactId>ruoyi-workflow</artifactId>
         </dependency>
 
     </dependencies>

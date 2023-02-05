@@ -38,6 +38,8 @@ import com.ruoyi.generator.util.GenUtils;
 import com.ruoyi.generator.util.VelocityInitializer;
 import com.ruoyi.generator.util.VelocityUtils;
 
+import javax.annotation.Resource;
+
 /**
  * 业务 服务层实现
  *
@@ -45,12 +47,13 @@ import com.ruoyi.generator.util.VelocityUtils;
  */
 @Service
 public class GenTableServiceImpl implements IGenTableService {
+
     private static final Logger log = LoggerFactory.getLogger(GenTableServiceImpl.class);
 
-    @Autowired
+    @Resource
     private GenTableMapper genTableMapper;
 
-    @Autowired
+    @Resource
     private GenTableColumnMapper genTableColumnMapper;
 
     /**

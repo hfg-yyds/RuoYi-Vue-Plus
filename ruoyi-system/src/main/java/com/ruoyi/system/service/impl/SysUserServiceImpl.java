@@ -3,11 +3,11 @@ package com.ruoyi.system.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.annotation.Resource;
 import javax.validation.Validator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -38,27 +38,28 @@ import com.ruoyi.system.service.ISysUserService;
  */
 @Service
 public class SysUserServiceImpl implements ISysUserService {
+
     private static final Logger log = LoggerFactory.getLogger(SysUserServiceImpl.class);
 
-    @Autowired
+    @Resource
     private SysUserMapper userMapper;
 
-    @Autowired
+    @Resource
     private SysRoleMapper roleMapper;
 
-    @Autowired
+    @Resource
     private SysPostMapper postMapper;
 
-    @Autowired
+    @Resource
     private SysUserRoleMapper userRoleMapper;
 
-    @Autowired
+    @Resource
     private SysUserPostMapper userPostMapper;
 
-    @Autowired
+    @Resource
     private ISysConfigService configService;
 
-    @Autowired
+    @Resource
     protected Validator validator;
 
     /**
@@ -157,9 +158,9 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     @Override
     public String checkUserNameUnique(SysUser user) {
-        Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
+        long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
         SysUser info = userMapper.checkUserNameUnique(user.getUserName());
-        if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue()) {
+        if (StringUtils.isNotNull(info) && info.getUserId() != userId) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
@@ -169,13 +170,13 @@ public class SysUserServiceImpl implements ISysUserService {
      * 校验手机号码是否唯一
      *
      * @param user 用户信息
-     * @return
+     * @return String
      */
     @Override
     public String checkPhoneUnique(SysUser user) {
-        Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
+        long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
         SysUser info = userMapper.checkPhoneUnique(user.getPhonenumber());
-        if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue()) {
+        if (StringUtils.isNotNull(info) && info.getUserId() != userId) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
@@ -185,13 +186,13 @@ public class SysUserServiceImpl implements ISysUserService {
      * 校验email是否唯一
      *
      * @param user 用户信息
-     * @return
+     * @return String
      */
     @Override
     public String checkEmailUnique(SysUser user) {
-        Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
+        long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
         SysUser info = userMapper.checkEmailUnique(user.getEmail());
-        if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue()) {
+        if (StringUtils.isNotNull(info) && info.getUserId() != userId) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
@@ -364,7 +365,7 @@ public class SysUserServiceImpl implements ISysUserService {
         Long[] posts = user.getPostIds();
         if (StringUtils.isNotEmpty(posts)) {
             // 新增用户与岗位管理
-            List<SysUserPost> list = new ArrayList<SysUserPost>(posts.length);
+            List<SysUserPost> list = new ArrayList<>(posts.length);
             for (Long postId : posts) {
                 SysUserPost up = new SysUserPost();
                 up.setUserId(user.getUserId());
@@ -384,7 +385,7 @@ public class SysUserServiceImpl implements ISysUserService {
     public void insertUserRole(Long userId, Long[] roleIds) {
         if (StringUtils.isNotEmpty(roleIds)) {
             // 新增用户与角色管理
-            List<SysUserRole> list = new ArrayList<SysUserRole>(roleIds.length);
+            List<SysUserRole> list = new ArrayList<>(roleIds.length);
             for (Long roleId : roleIds) {
                 SysUserRole ur = new SysUserRole();
                 ur.setUserId(userId);
@@ -436,11 +437,11 @@ public class SysUserServiceImpl implements ISysUserService {
      *
      * @param userList        用户数据列表
      * @param isUpdateSupport 是否更新支持，如果已存在，则进行更新数据
-     * @param operName        操作用户
+     * @param operationName        操作用户
      * @return 结果
      */
     @Override
-    public String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operName) {
+    public String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operationName) {
         if (StringUtils.isNull(userList) || userList.size() == 0) {
             throw new ServiceException("导入用户数据不能为空！");
         }
@@ -456,26 +457,26 @@ public class SysUserServiceImpl implements ISysUserService {
                 if (StringUtils.isNull(u)) {
                     BeanValidators.validateWithException(validator, user);
                     user.setPassword(SecurityUtils.encryptPassword(password));
-                    user.setCreateBy(operName);
+                    user.setCreateBy(operationName);
                     this.insertUser(user);
                     successNum++;
-                    successMsg.append("<br/>" + successNum + "、账号 " + user.getUserName() + " 导入成功");
+                    successMsg.append("<br/>").append(successNum).append("、账号 ").append(user.getUserName()).append(" 导入成功");
                 } else if (isUpdateSupport) {
                     BeanValidators.validateWithException(validator, user);
                     checkUserAllowed(user);
                     checkUserDataScope(user.getUserId());
-                    user.setUpdateBy(operName);
+                    user.setUpdateBy(operationName);
                     this.updateUser(user);
                     successNum++;
-                    successMsg.append("<br/>" + successNum + "、账号 " + user.getUserName() + " 更新成功");
+                    successMsg.append("<br/>").append(successNum).append("、账号 ").append(user.getUserName()).append(" 更新成功");
                 } else {
                     failureNum++;
-                    failureMsg.append("<br/>" + failureNum + "、账号 " + user.getUserName() + " 已存在");
+                    failureMsg.append("<br/>").append(failureNum).append("、账号 ").append(user.getUserName()).append(" 已存在");
                 }
             } catch (Exception e) {
                 failureNum++;
                 String msg = "<br/>" + failureNum + "、账号 " + user.getUserName() + " 导入失败：";
-                failureMsg.append(msg + e.getMessage());
+                failureMsg.append(msg).append(e.getMessage());
                 log.error(msg, e);
             }
         }

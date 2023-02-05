@@ -86,6 +86,7 @@ public class SysConfigServiceImpl implements ISysConfigService {
      */
     @Override
     public boolean selectCaptchaEnabled() {
+        //从缓存中获取值
         String captchaEnabled = selectConfigByKey("sys.account.captchaEnabled");
         if (StringUtils.isEmpty(captchaEnabled)) {
             return true;
@@ -210,4 +211,5 @@ public class SysConfigServiceImpl implements ISysConfigService {
     private String getCacheKey(String configKey) {
         return CacheConstants.SYS_CONFIG_KEY + configKey;
     }
+
 }

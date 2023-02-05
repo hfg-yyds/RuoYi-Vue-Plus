@@ -1,5 +1,6 @@
 package com.ruoyi.common.utils.spring;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -17,6 +18,7 @@ import com.ruoyi.common.utils.StringUtils;
  */
 @Component
 public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationContextAware {
+
     /**
      * Spring应用上下文环境
      */
@@ -25,12 +27,12 @@ public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationC
     private static ApplicationContext applicationContext;
 
     @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+    public void postProcessBeanFactory(@NotNull ConfigurableListableBeanFactory beanFactory) throws BeansException {
         SpringUtils.beanFactory = beanFactory;
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(@NotNull ApplicationContext applicationContext) throws BeansException {
         SpringUtils.applicationContext = applicationContext;
     }
 
