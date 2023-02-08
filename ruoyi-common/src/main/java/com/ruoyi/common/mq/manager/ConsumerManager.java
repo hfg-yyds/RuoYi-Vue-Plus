@@ -1,5 +1,6 @@
 package com.ruoyi.common.mq.manager;
 
+import cn.hutool.core.map.MapUtil;
 import com.ruoyi.common.mq.IConsumer;
 import com.ruoyi.common.mq.enums.ConsumerEnum;
 
@@ -15,7 +16,11 @@ import java.util.Map;
  */
 public class ConsumerManager {
 
-    private Map<ConsumerEnum, IConsumer> consumerMap;
+    private final Map<ConsumerEnum, IConsumer> consumerMap;
+
+    public ConsumerManager() {
+        this.consumerMap = MapUtil.newHashMap();
+    }
 
     public void registerProducer(ConsumerEnum consumerEnum, IConsumer iConsumer) {
         consumerMap.put(consumerEnum,iConsumer);

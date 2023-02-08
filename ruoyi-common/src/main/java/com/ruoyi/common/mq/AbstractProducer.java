@@ -27,11 +27,11 @@ public abstract class AbstractProducer<T> implements IProducer<T> {
 
     @Resource
     private ProducerManager producerManager;
-
+    protected DefaultMQProducer producer;
     private void buildProducer() {
         try {
             //构造参数
-            DefaultMQProducer producer = new DefaultMQProducer("please_rename_unique_group_name");
+            producer = new DefaultMQProducer("please_rename_unique_group_name");
             // 设置NameServer的地址
             producer.setNamesrvAddr("localhost:9876");
             //

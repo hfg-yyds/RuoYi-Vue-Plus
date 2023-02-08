@@ -4,9 +4,11 @@ import com.ruoyi.common.mq.config.RocketProperties;
 import com.ruoyi.common.mq.enums.ConsumerEnum;
 import com.ruoyi.common.mq.manager.ConsumerManager;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * <p>
@@ -22,7 +24,7 @@ public abstract class AbstractConsumer implements IConsumer {
 
     protected abstract IConsumer getConsumer();
 
-    private DefaultMQPushConsumer consumer;
+    protected DefaultMQPushConsumer consumer;
 
     @Resource
     private RocketProperties rocketProperties;

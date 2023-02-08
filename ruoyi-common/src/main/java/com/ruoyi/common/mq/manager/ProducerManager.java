@@ -1,5 +1,6 @@
 package com.ruoyi.common.mq.manager;
 
+import cn.hutool.core.map.MapUtil;
 import com.ruoyi.common.mq.IProducer;
 import com.ruoyi.common.mq.enums.ProducerEnum;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,11 @@ import java.util.Map;
 public class ProducerManager {
 
 
-    private Map<ProducerEnum, IProducer> producerMap;
+    private final Map<ProducerEnum, IProducer> producerMap;
+
+    public ProducerManager() {
+        this.producerMap = MapUtil.newHashMap();
+    }
 
     public void registerProducer(ProducerEnum producer,IProducer iProducer) {
         producerMap.put(producer,iProducer);
