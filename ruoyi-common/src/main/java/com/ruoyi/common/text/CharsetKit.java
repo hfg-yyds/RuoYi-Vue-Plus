@@ -2,6 +2,9 @@ package com.ruoyi.common.text;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.sql.Driver;
+import java.util.Iterator;
+import java.util.ServiceLoader;
 
 import com.ruoyi.common.utils.StringUtils;
 
@@ -87,5 +90,15 @@ public class CharsetKit {
      */
     public static String systemCharset() {
         return Charset.defaultCharset().name();
+    }
+
+
+    public static void main(String[] args) {
+        ServiceLoader<Driver> drivers = ServiceLoader.load(Driver.class);
+        Iterator<Driver> iterator = drivers.iterator();
+        while (iterator.hasNext()) {
+            Driver driver = iterator.next();
+            driver.getMajorVersion();
+        }
     }
 }

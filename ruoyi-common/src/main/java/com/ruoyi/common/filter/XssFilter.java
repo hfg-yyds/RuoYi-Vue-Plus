@@ -52,6 +52,12 @@ public class XssFilter implements Filter {
         chain.doFilter(xssRequest, response);
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     private boolean handleExcludeURL(HttpServletRequest request, HttpServletResponse response) {
         String url = request.getServletPath();
         String method = request.getMethod();

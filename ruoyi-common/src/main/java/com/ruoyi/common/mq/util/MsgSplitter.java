@@ -3,8 +3,6 @@ package com.ruoyi.common.mq.util;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.Message;
 
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
