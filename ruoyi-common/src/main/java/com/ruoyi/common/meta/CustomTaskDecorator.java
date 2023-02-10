@@ -18,7 +18,7 @@ import java.util.Objects;
  * @date: 2023-02-04
  */
 @Slf4j
-    public class CustomTaskDecorator implements TaskDecorator {
+public class CustomTaskDecorator implements TaskDecorator {
 
     @NotNull
     @Override

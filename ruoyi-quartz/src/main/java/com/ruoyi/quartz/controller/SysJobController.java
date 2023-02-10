@@ -89,7 +89,7 @@ public class SysJobController extends BaseController {
             return error("新增任务'" + job.getJobName() + "'失败，目标字符串不允许'http(s)'调用");
         } else if (StringUtils.containsAnyIgnoreCase(job.getInvokeTarget(), Constants.JOB_ERROR_STR)) {
             return error("新增任务'" + job.getJobName() + "'失败，目标字符串存在违规");
-        } else if (!ScheduleUtils.whiteList(job.getInvokeTarget())) {
+        } else if (ScheduleUtils.whiteList(job.getInvokeTarget())) {
             return error("新增任务'" + job.getJobName() + "'失败，目标字符串不在白名单内");
         }
         job.setCreateBy(getUsername());
@@ -113,7 +113,7 @@ public class SysJobController extends BaseController {
             return error("修改任务'" + job.getJobName() + "'失败，目标字符串不允许'http(s)'调用");
         } else if (StringUtils.containsAnyIgnoreCase(job.getInvokeTarget(), Constants.JOB_ERROR_STR)) {
             return error("修改任务'" + job.getJobName() + "'失败，目标字符串存在违规");
-        } else if (!ScheduleUtils.whiteList(job.getInvokeTarget())) {
+        } else if (ScheduleUtils.whiteList(job.getInvokeTarget())) {
             return error("修改任务'" + job.getJobName() + "'失败，目标字符串不在白名单内");
         }
         job.setUpdateBy(getUsername());
