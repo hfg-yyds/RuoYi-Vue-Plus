@@ -45,7 +45,7 @@ public class RateLimiterAspect {
     }
 
     @Before("@annotation(rateLimiter)")
-    public void doBefore(JoinPoint point, RateLimiter rateLimiter) throws Throwable {
+    public void doBefore(JoinPoint point, RateLimiter rateLimiter) {
         int time = rateLimiter.time();
         int count = rateLimiter.count();
 
@@ -65,21 +65,21 @@ public class RateLimiterAspect {
     }
 
     /**
-     *
-     * @param rateLimiter
-     * @param point
-     * @return
+     * 获取限流key
+     * @param rateLimiter 限流注解
+     * @param point 节点
+     * @return 限流key
      */
     public String getCombineKey(RateLimiter rateLimiter, JoinPoint point) {
-        StringBuilder stringBuffer = new StringBuilder(rateLimiter.key());
+        StringBuilder rateKey = new StringBuilder(rateLimiter.key());
         if (rateLimiter.limitType() == LimitType.IP) {
-            stringBuffer.append(IpUtils.getIpAddr(ServletUtils.getRequest())).append("-");
+            rateKey.append(IpUtils.getIpAddr(ServletUtils.getRequest())).append("-");
         }
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
         Class<?> targetClass = method.getDeclaringClass();
-        stringBuffer.append(targetClass.getName()).append("-").append(method.getName());
-        return stringBuffer.toString();
+        rateKey.append(targetClass.getName()).append("-").append(method.getName());
+        return rateKey.toString();
     }
 
 }

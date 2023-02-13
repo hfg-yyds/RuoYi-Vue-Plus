@@ -3,7 +3,7 @@ package com.ruoyi.common.web.domain;
 import java.io.Serializable;
 
 import com.ruoyi.common.constant.HttpStatus;
-import com.ruoyi.common.meta.RunResult;
+import com.ruoyi.common.metadata.RunResult;
 import lombok.extern.slf4j.Slf4j;
 
 /**

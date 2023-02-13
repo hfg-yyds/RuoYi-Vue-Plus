@@ -24,6 +24,7 @@ import com.ruoyi.quartz.domain.SysJob;
  * @author ruoyi
  */
 public class ScheduleUtils {
+
     /**
      * 得到quartz任务类
      *

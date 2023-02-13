@@ -1,6 +1,6 @@
 package com.ruoyi.common.constant;
 
-import com.ruoyi.common.enums.IEnum;
+import com.ruoyi.common.metadata.IEnum;
 
 /**
  * 任务调度通用常量

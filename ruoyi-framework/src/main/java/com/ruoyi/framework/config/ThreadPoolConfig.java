@@ -1,6 +1,6 @@
 package com.ruoyi.framework.config;
 
-import com.ruoyi.common.meta.CustomTaskDecorator;
+import com.ruoyi.common.metadata.CustomTaskDecorator;
 import com.ruoyi.common.utils.ThreadUtils;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.springframework.context.annotation.Bean;

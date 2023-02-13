@@ -1,6 +1,6 @@
 package com.ruoyi.common.mq.enums;
 
-import com.ruoyi.common.enums.IEnum;
+import com.ruoyi.common.metadata.IEnum;
 
 /**
  * <p>

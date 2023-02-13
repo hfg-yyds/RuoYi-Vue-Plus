@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.math.BigDecimal;
 
-import com.ruoyi.common.enums.IEnum;
+import com.ruoyi.common.metadata.IEnum;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import com.ruoyi.common.utils.poi.ExcelHandlerAdapter;

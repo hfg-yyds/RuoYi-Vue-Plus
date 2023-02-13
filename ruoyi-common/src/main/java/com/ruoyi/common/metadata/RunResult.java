@@ -1,4 +1,4 @@
-package com.ruoyi.common.meta;
+package com.ruoyi.common.metadata;
 
 /**
  * <p>

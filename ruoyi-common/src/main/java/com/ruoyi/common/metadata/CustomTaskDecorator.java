@@ -1,4 +1,4 @@
-package com.ruoyi.common.meta;
+package com.ruoyi.common.metadata;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
