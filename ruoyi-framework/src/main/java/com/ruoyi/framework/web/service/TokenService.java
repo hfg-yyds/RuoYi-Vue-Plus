@@ -29,15 +29,22 @@ import io.jsonwebtoken.SignatureAlgorithm;
  */
 @Component
 public class TokenService {
-    // 令牌自定义标识
+
+    /**
+     * 令牌自定义标识
+     */
     @Value("${token.header}")
     private String header;
 
-    // 令牌秘钥
+    /**
+     * 令牌秘钥
+     */
     @Value("${token.secret}")
     private String secret;
 
-    // 令牌有效期（默认30分钟）
+    /**
+     * 令牌有效期（默认30分钟）
+     */
     @Value("${token.expireTime}")
     private int expireTime;
 
@@ -111,7 +118,7 @@ public class TokenService {
     /**
      * 验证令牌有效期，相差不足20分钟，自动刷新缓存
      *
-     * @param loginUser
+     * @param loginUser loginUser
      * @return 令牌
      */
     public void verifyToken(LoginUser loginUser) {
@@ -156,10 +163,9 @@ public class TokenService {
      * @return 令牌
      */
     private String createToken(Map<String, Object> claims) {
-        String token = Jwts.builder()
+        return Jwts.builder()
                 .setClaims(claims)
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
-        return token;
     }
 
     /**
@@ -173,17 +179,6 @@ public class TokenService {
                 .setSigningKey(secret)
                 .parseClaimsJws(token)
                 .getBody();
-    }
-
-    /**
-     * 从令牌中获取用户名
-     *
-     * @param token 令牌
-     * @return 用户名
-     */
-    public String getUsernameFromToken(String token) {
-        Claims claims = parseToken(token);
-        return claims.getSubject();
     }
 
     /**
@@ -203,4 +198,5 @@ public class TokenService {
     private String getTokenKey(String uuid) {
         return CacheConstants.LOGIN_TOKEN_KEY + uuid;
     }
+
 }

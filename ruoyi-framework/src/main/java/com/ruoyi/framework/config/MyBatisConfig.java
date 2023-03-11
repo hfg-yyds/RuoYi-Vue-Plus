@@ -33,11 +33,22 @@ import com.ruoyi.common.utils.StringUtils;
 @Configuration
 public class MyBatisConfig {
 
+    /**
+     * env
+     */
     @Autowired
     private Environment env;
 
-    static final String DEFAULT_RESOURCE_PATTERN = "**/*.class";
+    /**
+     * DEFAULT_RESOURCE_PATTERN
+     */
+    private static final String DEFAULT_RESOURCE_PATTERN = "**/*.class";
 
+    /**
+     * 设置Type别名
+     * @param typeAliasesPackage typeAliasesPackage
+     * @return String
+     */
     public static String setTypeAliasesPackage(String typeAliasesPackage) {
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory(resolver);
@@ -77,6 +88,11 @@ public class MyBatisConfig {
         return typeAliasesPackage;
     }
 
+    /**
+     * 解析Mapper
+     * @param mapperLocations mapperLocations
+     * @return Resource[]
+     */
     public Resource[] resolveMapperLocations(String[] mapperLocations) {
         ResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver();
         List<Resource> resources = new ArrayList<>();
@@ -93,6 +109,12 @@ public class MyBatisConfig {
         return resources.toArray(new Resource[0]);
     }
 
+    /**
+     * SqlSessionFactory工厂类
+     * @param dataSource 数据源
+     * @return SqlSessionFactory
+     * @throws Exception e
+     */
     @Bean
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
         String typeAliasesPackage = env.getProperty("mybatis.typeAliasesPackage");

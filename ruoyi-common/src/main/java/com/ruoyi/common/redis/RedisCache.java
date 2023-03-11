@@ -164,8 +164,8 @@ public class RedisCache {
     /**
      * 获得缓存的set
      *
-     * @param key
-     * @return
+     * @param key Key
+     * @return T
      */
     public <T> Set<T> getCacheSet(final String key) {
         return redisTemplate.opsForSet().members(key);

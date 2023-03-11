@@ -82,4 +82,5 @@ public class SysPasswordService {
             redisCache.deleteObject(getCacheKey(loginName));
         }
     }
+
 }

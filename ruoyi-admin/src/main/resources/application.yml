@@ -137,13 +137,10 @@ camunda:
       id: camunda
       password: admin
       first-name: admin
-
     database:
       type: mysql
-
     filter:
       create: All tasks
-
 #    #配置路径
 #    webapp:
 #      application-path: /mycamunda

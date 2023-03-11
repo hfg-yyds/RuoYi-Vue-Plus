@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,6 +65,5 @@ public class WorkFlowController extends BaseController {
         List<ProcessInstanceDto> list = workFlowService.queryProcessInstances(pageDomain.getPageNum(), pageDomain.getPageSize());
         return getDataTable(list);
     }
-
 
 }

@@ -62,7 +62,7 @@
                 <version>${bitwalker.version}</version>
             </dependency>
 
-            <!-- pagehelper 分页插件 -->
+            <!-- PageHelper 分页插件 -->
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
@@ -187,12 +187,14 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!--HuTool工具-->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
 
+            <!--mybatis-plus-->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -211,6 +213,7 @@
         <module>ruoyi-common</module>
         <module>Ruoyi-workflow</module>
         <module>ruoyi-test</module>
+        <module>ruiyi-dependencies</module>
     </modules>
     <packaging>pom</packaging>
 
