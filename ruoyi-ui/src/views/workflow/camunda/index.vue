@@ -8,9 +8,8 @@
     components: { iFrame },
     data() {
       return {
-        url: "http://localhost:8080/camunda/app/welcome/default/#!/login"
+        url: "http://localhost:8080/camunda/app/welcome/default/#!/welcome"
       };
     },
   };
 </script>
-  

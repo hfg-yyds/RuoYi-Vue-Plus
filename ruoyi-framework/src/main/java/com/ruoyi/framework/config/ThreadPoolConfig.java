@@ -38,6 +38,7 @@ public class ThreadPoolConfig {
         executor.setCorePoolSize(corePoolSize);
         executor.setQueueCapacity(queueCapacity);
         executor.setKeepAliveSeconds(keepAliveSeconds);
+        //装饰器
         executor.setTaskDecorator(new CustomTaskDecorator());
         executor.setThreadNamePrefix("RuoYi");
         // 线程池对拒绝任务(无线程可用)的处理策略
