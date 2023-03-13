@@ -77,7 +77,7 @@ public class SysJobServiceImpl implements ISysJobService {
     public int pauseJob(SysJob job) throws SchedulerException {
         Long jobId = job.getJobId();
         String jobGroup = job.getJobGroup();
-        job.setStatus(ScheduleConstants.Status.PAUSE.value());
+        job.setStatus(ScheduleConstants.ScheduleStatus.PAUSE.value());
         int rows = jobMapper.updateJob(job);
         if (rows > 0) {
             scheduler.pauseJob(ScheduleUtils.getJobKey(jobId, jobGroup));
@@ -95,7 +95,7 @@ public class SysJobServiceImpl implements ISysJobService {
     public int resumeJob(SysJob job) throws SchedulerException {
         Long jobId = job.getJobId();
         String jobGroup = job.getJobGroup();
-        job.setStatus(ScheduleConstants.Status.NORMAL.value());
+        job.setStatus(ScheduleConstants.ScheduleStatus.NORMAL.value());
         int rows = jobMapper.updateJob(job);
         if (rows > 0) {
             scheduler.resumeJob(ScheduleUtils.getJobKey(jobId, jobGroup));
@@ -145,9 +145,9 @@ public class SysJobServiceImpl implements ISysJobService {
     public int changeStatus(SysJob job) throws SchedulerException {
         int rows = 0;
         String status = job.getStatus();
-        if (ScheduleConstants.Status.NORMAL.value().equals(status)) {
+        if (ScheduleConstants.ScheduleStatus.NORMAL.value().equals(status)) {
             rows = resumeJob(job);
-        } else if (ScheduleConstants.Status.PAUSE.value().equals(status)) {
+        } else if (ScheduleConstants.ScheduleStatus.PAUSE.value().equals(status)) {
             rows = pauseJob(job);
         }
         return rows;
@@ -184,7 +184,7 @@ public class SysJobServiceImpl implements ISysJobService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insertJob(SysJob job) throws SchedulerException, TaskException {
-        job.setStatus(ScheduleConstants.Status.PAUSE.value());
+        job.setStatus(ScheduleConstants.ScheduleStatus.PAUSE.value());
         int rows = jobMapper.insertJob(job);
         if (rows > 0) {
             ScheduleUtils.createScheduleJob(scheduler, job);

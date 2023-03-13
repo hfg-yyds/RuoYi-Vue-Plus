@@ -7,36 +7,36 @@ import com.ruoyi.common.metadata.IEnum;
  *
  * @author ruoyi
  */
-public class ScheduleConstants {
+public interface ScheduleConstants {
 
-    public static final String TASK_CLASS_NAME = "TASK_CLASS_NAME";
+     String TASK_CLASS_NAME = "TASK_CLASS_NAME";
 
     /**
      * 执行目标key
      */
-    public static final String TASK_PROPERTIES = "TASK_PROPERTIES";
+     String TASK_PROPERTIES = "TASK_PROPERTIES";
 
     /**
      * 默认
      */
-    public static final String MISFIRE_DEFAULT = "0";
+     String MISFIRE_DEFAULT = "0";
 
     /**
      * 立即触发执行
      */
-    public static final String MISFIRE_IGNORE_MISFIRES = "1";
+     String MISFIRE_IGNORE_MISFIRES = "1";
 
     /**
      * 触发一次执行
      */
-    public static final String MISFIRE_FIRE_AND_PROCEED = "2";
+     String MISFIRE_FIRE_AND_PROCEED = "2";
 
     /**
      * 不触发立即执行
      */
-    public static final String MISFIRE_DO_NOTHING = "3";
+     String MISFIRE_DO_NOTHING = "3";
 
-    public enum Status implements IEnum<String> {
+     enum ScheduleStatus implements IEnum<String> {
         /**
          * 正常
          */
@@ -48,7 +48,7 @@ public class ScheduleConstants {
 
         private String value;
 
-        Status(String value) {
+        ScheduleStatus(String value) {
             this.value = value;
         }
 
@@ -58,4 +58,5 @@ public class ScheduleConstants {
         }
 
     }
+
 }

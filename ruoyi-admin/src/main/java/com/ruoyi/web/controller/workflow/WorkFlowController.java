@@ -5,20 +5,17 @@ import com.ruoyi.common.web.domain.R;
 import com.ruoyi.common.web.page.PageDomain;
 import com.ruoyi.common.web.page.TableDataInfo;
 import com.ruoyi.common.web.page.TableSupport;
-import com.ruoyi.workflow.service.WorkFlowService;
+import com.ruoyi.workflow.service.IWorkFlowProcessService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.camunda.bpm.engine.rest.dto.history.HistoricTaskInstanceDto;
 import org.camunda.bpm.engine.rest.dto.repository.DeploymentDto;
 import org.camunda.bpm.engine.rest.dto.runtime.ProcessInstanceDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,7 +35,7 @@ public class WorkFlowController extends BaseController {
      * 工作流服务
      */
     @Autowired
-    private WorkFlowService workFlowService;
+    private IWorkFlowProcessService workFlowProcessService;
 
     /**
      * 流程部署
@@ -51,7 +48,7 @@ public class WorkFlowController extends BaseController {
     @PostMapping("/deployProcess")
     public R<DeploymentDto> deployProcess(@NotNull(message = "部署资源不能为空") MultipartFile file,
                                           String name, String source) {
-        return R.run(()-> workFlowService.deployProcess(file, name, source));
+        return R.run(()-> workFlowProcessService.deployProcess(file, name, source));
     }
 
     /**
@@ -62,8 +59,18 @@ public class WorkFlowController extends BaseController {
     @GetMapping("/queryProcessInstances")
     public TableDataInfo queryProcessInstances() {
         PageDomain pageDomain = TableSupport.buildPageRequest();
-        List<ProcessInstanceDto> list = workFlowService.queryProcessInstances(pageDomain.getPageNum(), pageDomain.getPageSize());
+        List<ProcessInstanceDto> list = workFlowProcessService.queryProcessInstances(pageDomain.getPageNum(), pageDomain.getPageSize());
         return getDataTable(list);
+    }
+
+    /**
+     * 查找正在运行的流程实例
+     * @return R
+     */
+    @ApiOperation(value = "查找正在运行的流程实例")
+    @GetMapping("/getDoneTaskPage")
+    public R<List<HistoricTaskInstanceDto>> getDoneTaskPage(String userId) {
+        return R.run(()->workFlowProcessService.getDoneTaskPage(userId));
     }
 
 }

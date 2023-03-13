@@ -5,7 +5,7 @@ import com.ruoyi.workflow.domain.Business;
 import com.ruoyi.workflow.domain.ProcessRequest;
 import com.ruoyi.workflow.domain.TaskRequest;
 import com.ruoyi.workflow.service.BusinessService;
-import com.ruoyi.workflow.service.WorkFlowService;
+import com.ruoyi.workflow.service.IWorkFlowProcessService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.camunda.bpm.engine.HistoryService;
@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service(value = "workFlowServiceImpl")
-public class WorkFlowServiceImpl implements WorkFlowService {
+public class WorkFlowProcessServiceImpl implements IWorkFlowProcessService {
 
     @Autowired
     private RuntimeService runtimeService;
@@ -143,8 +143,6 @@ public class WorkFlowServiceImpl implements WorkFlowService {
         List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery().active().listPage(start,max);
         return processInstances.stream().map(ProcessInstanceDto::fromProcessInstance).collect(Collectors.toList());
     }
-
-
 
     /**
      *

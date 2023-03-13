@@ -19,7 +19,7 @@ import java.util.List;
  * @author: 韩福贵
  * @date: 2023-01-07
  */
-public interface WorkFlowService {
+public interface IWorkFlowProcessService {
 
     /**
      * 流程部署
@@ -38,6 +38,7 @@ public interface WorkFlowService {
      * @return
      */
     ProcessInstanceDto startProcessInstanceByKey(ProcessRequest request);
+
     /**
      * 查询已办任务
      *
@@ -45,7 +46,6 @@ public interface WorkFlowService {
      * @return 历史
      */
     List<HistoricTaskInstanceDto> getDoneTaskPage(String userId);
-
 
     /**
      * 流程挂起
